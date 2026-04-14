@@ -1,0 +1,4 @@
+/* index.css — minimal reset; all design tokens are in styles/globals.css */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+#root { min-height: 100vh; }

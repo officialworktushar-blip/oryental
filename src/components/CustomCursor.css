@@ -1,0 +1,41 @@
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+}
+
+.cursor-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  mix-blend-mode: screen;
+  box-shadow: 0 0 16px rgba(201, 168, 76, 0.55);
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgba(201, 168, 76, 0.45);
+  box-shadow: 0 0 0 1px rgba(240, 208, 128, 0.08);
+  transition: border-color 0.2s ease, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cursor-ring.ring-hover {
+  border-color: var(--gold);
+  width: 52px;
+  height: 52px;
+  box-shadow: 0 0 24px rgba(201, 168, 76, 0.22);
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
