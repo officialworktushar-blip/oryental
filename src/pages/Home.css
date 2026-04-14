@@ -461,3 +461,56 @@
   .services-preview-grid { grid-template-columns: 1fr; }
   .cta-banner { margin: 0 20px 50px; padding: 40px 24px; }
 }
+/* Prevent horizontal scroll globally */
+.home {
+  overflow-x: hidden;
+}
+
+/* Fix hero overflow */
+.hero {
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  /* Force logo size (overrides any inline style) */
+  .hero-logo-large {
+    width: min(70vw, 280px) !important;
+    height: min(70vw, 280px) !important;
+    max-width: 280px !important;
+    max-height: 280px !important;
+  }
+
+  .hero-brand-stage {
+    min-height: 240px;
+    overflow: hidden;
+  }
+
+  /* Prevent heading text from overflowing */
+  .hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .hero-wordmark {
+    font-size: clamp(2.5rem, 13vw, 4rem);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .hero-content {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Shrink orbits to match smaller logo */
+  .hero-logo-orbit-a {
+    width: 260px !important;
+    height: 260px !important;
+  }
+
+  .hero-logo-orbit-b {
+    width: 300px !important;
+    height: 300px !important;
+  }
+}
