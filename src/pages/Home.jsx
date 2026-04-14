@@ -45,7 +45,6 @@ export default function Home() {
   src={logo}  
   alt="Oryntal Logo" 
     className="hero-logo hero-logo-large logo-3d"
-  style={{ width: '600px', height: '600px' }}
 />
           </div>
 
