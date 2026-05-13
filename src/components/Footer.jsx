@@ -65,6 +65,8 @@ export default function Footer() {
               <li><a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
               <li><a href={SOCIAL_LINKS.twitter} target="_blank" rel="noreferrer">X (Twitter)</a></li>
               <li><a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer">Instagram</a></li>
+               <li><a href="https://docs.google.com/document/d/1EkEThAc5OUmN0eS3WBM1HFJiZJfidXcxklNNdysTdAQ/edit?usp=sharing"
+        target="_blank" target="_blank" rel="noreferrer">Refund Policy</a></li>
             </ul>
           </div>
         </div>
