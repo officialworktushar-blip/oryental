@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
 import Icon from '../components/Icon'
+import ReviewForm from '../components/ReviewForm'
+import { supabase } from '../lib/supabase'
 import logo from '../assets/oryntal-logo.png'
 import './Home.css'
 
@@ -20,14 +23,56 @@ const SERVICES_PREVIEW = [
 
 const MARQUEE_ITEMS = ['AI LLM Models', 'NLP Pipelines', 'Web Design', 'Neural Architectures', 'Chatbot and AI Agents', 'App Design']
 
+function renderStars(count) {
+  return Array.from({ length: 5 }, (_, i) => (
+    <span key={i} className={`review-star-display ${i < count ? 'filled' : ''}`}>★</span>
+  ))
+}
+
+function getProfileUrl(item) {
+  return item.linkedin || item.profile_url || '#'
+}
+
+function getPlatform(item) {
+  const url = (item.linkedin || item.profile_url || '').toLowerCase()
+  if (url.includes('instagram.com') || url.includes('instagr.am')) return 'instagram'
+  return 'linkedin'
+}
+
 export default function Home() {
   const navigate = useNavigate()
   const pageRef = useRevealOnMount()
+  const [reviews, setReviews] = useState([])
+  const [showModal, setShowModal] = useState(false)
 
   const go = (path) => {
     navigate(path)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const fetchReviews = async () => {
+    if (!supabase) return
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(6)
+    if (error) console.error('[Reviews] Fetch error:', error)
+    if (data) setReviews(data)
+  }
+
+  useEffect(() => {
+    fetchReviews()
+  }, [])
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [showModal])
 
   return (
     <div className="home page-enter" ref={pageRef}>
@@ -41,9 +86,9 @@ export default function Home() {
             <div className="hero-logo-halo" />
             <div className="hero-logo-orbit hero-logo-orbit-a" />
             <div className="hero-logo-orbit hero-logo-orbit-b" />
-           <img 
-  src={logo}  
-  alt="Oryntal Logo" 
+           <img
+  src={logo}
+  alt="Oryntal Logo"
     className="hero-logo hero-logo-large logo-3d"
 />
           </div>
@@ -67,6 +112,9 @@ export default function Home() {
                 Explore Services <Icon name="arrowRight" size={16} />
               </button>
               <button className="btn-ghost" onClick={() => go('/contact')}>Let&apos;s Talk</button>
+              <a href="https://oryntal-portfolio-showcase.vercel.app/" target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ textDecoration: 'none' }}>
+                Check Portfolio <Icon name="arrowRight" size={16} />
+              </a>
             </div>
             <div className="hero-micro-stats">
               {['AI Systems', 'Brand Design', 'Growth Outcomes'].map((item) => (
@@ -104,6 +152,46 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <section className="section">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> Client Reviews</div>
+            <h2 className="section-heading">What Our <span className="gold-text">Clients</span> Say</h2>
+            <div style={{ marginTop: 20 }}>
+              <button className="btn-gold" onClick={() => setShowModal(true)}>
+                Write a Review <Icon name="arrowRight" size={16} />
+              </button>
+            </div>
+          </div>
+          {reviews.length > 0 ? (
+            <div className="reviews-grid">
+              {reviews.map((item) => (
+                <div className="glass review-card reveal" key={item.id}>
+                  <div className="review-stars-display">{renderStars(item.rating)}</div>
+                  <p className="review-text">&ldquo;{item.review}&rdquo;</p>
+                  <div className="review-author">
+                    <a className="review-link" href={getProfileUrl(item)} target="_blank" rel="noreferrer">
+                      <Icon name={getPlatform(item)} size={16} />
+                      <span>{item.name}</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="section-sub" style={{ textAlign: 'center' }}>No reviews yet. Be the first to share your experience!</p>
+          )}
+        </div>
+      </section>
+
+      {showModal && (
+        <div className="review-modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="review-modal-content" onClick={(e) => e.stopPropagation()}>
+            <ReviewForm onSubmitted={fetchReviews} onClose={() => setShowModal(false)} />
+          </div>
+        </div>
+      )}
 
       <section className="section">
         <div className="container">

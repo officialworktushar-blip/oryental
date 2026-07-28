@@ -50,10 +50,19 @@ export function useRevealOnMount() {
       { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
     )
 
-    const revealItems = el.querySelectorAll('.reveal')
-    revealItems.forEach((item) => observer.observe(item))
+    const observeReveal = () => {
+      el.querySelectorAll('.reveal:not(.visible)').forEach((item) => observer.observe(item))
+    }
 
-    return () => observer.disconnect()
+    observeReveal()
+
+    const mutationObserver = new MutationObserver(observeReveal)
+    mutationObserver.observe(el, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      mutationObserver.disconnect()
+    }
   }, [])
 
   return ref

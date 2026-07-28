@@ -46,35 +46,17 @@ const FOUNDERS = [
       'Built the operational financial framework from the ground up',
     ],
   },
-]
-
-const TEAM = [
   {
     initials: 'PS',
     name: 'Parth Srivastav',
     linkedin: 'https://www.linkedin.com/in/parth-srivastava-bloomingsparrow/',
     role: 'CMO',
-    bullets: ['Brand and content strategy', 'Turns AI products into market stories', 'Demand generation', 'B2B tech positioning'],
-  },
-  {
-    initials: 'VK',
-    name: 'Vinay Kumar Reddy',
-    linkedin: 'https://www.linkedin.com/in/vinay-kumar-reddy-chinthala-993972287/',
-    role: 'CTO',
-    bullets: ['AI and ML architecture', 'Custom LLM fine-tuning', 'Production deployment', 'Full-stack AI from training to API'],
-  },
-  {
-    initials: 'KR',
-    name: 'Kuldip Rai',
-    linkedin: 'https://www.linkedin.com/in/kuldeep-rai-26a983396/',
-    role: 'Outreach and Sales',
-    bullets: ['Global client connections', 'Consultative sales approach', 'Inbound pipeline management', 'Partnership development'],
-  },
-  {
-    initials: 'VR',
-    name: 'Vans Rana',
-    role: 'COO',
-    bullets: ['Operational engine and workflows', 'Project timeline execution', 'Client satisfaction oversight', 'Bridge between teams and clients'],
+    bullets: [
+      'Brand and content strategy',
+      'Turns AI products into market stories',
+      'Demand generation',
+      'B2B tech positioning',
+    ],
   },
 ]
 
@@ -193,29 +175,6 @@ export default function About() {
                   {founder.bullets.map((bullet) => (
                     <li key={bullet}><span className="bullet-dot" /> {bullet}</li>
                   ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> The Team</div>
-            <h2 className="section-heading">The <span className="gold-text">Minds</span> Behind the Work</h2>
-          </div>
-          <div className="team-grid">
-            {TEAM.map((member) => (
-              <div className="neu team-card reveal" key={member.name}>
-                <div className="team-avatar">{member.initials}</div>
-                {member.linkedin
-                  ? <a className="team-name team-link" href={member.linkedin} target="_blank" rel="noreferrer">{member.name}</a>
-                  : <div className="team-name">{member.name}</div>}
-                <div className="team-role">{member.role}</div>
-                <ul className="team-bullets">
-                  {member.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
                 </ul>
               </div>
             ))}

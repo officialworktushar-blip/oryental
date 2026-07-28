@@ -61,7 +61,7 @@ export default function Footer() {
           <div className="footer-col">
             <div className="footer-col-title">Contact</div>
             <ul className="footer-links">
-              <li><a href="mailto:oryntal.agency@gmail.com">oryntal.agency@gmail.com</a></li>
+              <li><a href="mailto:support.oryntal@agency.org.in">support.oryntal@agency.org.in</a></li>
               <li><a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
               <li><a href={SOCIAL_LINKS.twitter} target="_blank" rel="noreferrer">X (Twitter)</a></li>
               <li><a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer">Instagram</a></li>

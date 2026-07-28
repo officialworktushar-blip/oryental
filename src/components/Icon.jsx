@@ -230,6 +230,12 @@ const iconMap = {
   star: (
     <path d="m12 3 2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.2l5.9-.9L12 3Z" />
   ),
+  checkCircle: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m9 12 2 2 4-4" />
+    </>
+  ),
 }
 
 export default function Icon({ name, className = '', size = 20, strokeWidth = 1.8, filled = false }) {
