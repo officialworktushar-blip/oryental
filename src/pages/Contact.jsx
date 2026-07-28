@@ -8,16 +8,14 @@ import logo from '../assets/oryntal-logo.png'
 import './Contact.css'
 
 // ─────────────────────────────────────────────────────────────
-// EmailJS configuration
-// 1. Sign up free at https://www.emailjs.com
-// 2. Add a Gmail service  →  copy the Service ID below
-// 3. Create an email template (use variables: {{from_name}}, {{from_email}},
-//    {{company}}, {{service}}, {{message}})  →  copy the Template ID below
-// 4. Go to Account → API Keys  →  copy your Public Key below
+// EmailJS — reads from VITE_EMAILJS_* env vars (see .env.example)
+// Fallback: opens mailto: link if env vars are not set
 // ─────────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'   // e.g. 'service_abc123'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'  // e.g. 'template_xyz789'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'   // e.g. 'AbcDeFgHiJkLmNoP'
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+const emailjsConfigured = EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY
 
 const CONTACT_EMAIL = 'support.oryntal@agency.org.in'
 
@@ -139,13 +137,8 @@ export default function Contact() {
     setFormError('')
     setFormStatus('sending')
 
-    // Check if EmailJS has been configured
-    if (
-      EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' ||
-      EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID' ||
-      EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
-    ) {
-      // Fallback to mailto when EmailJS is not yet configured
+    // Fallback to mailto when EmailJS is not configured
+    if (!emailjsConfigured) {
       const sub  = encodeURIComponent(`New Project Inquiry from ${fname} ${formData.lname} - Oryntal`)
       const body = encodeURIComponent(
         `Name: ${fname} ${formData.lname}\nEmail: ${email}\nCompany: ${formData.company}\nService: ${formData.service}\n\nMessage:\n${message}`

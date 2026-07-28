@@ -1,7 +1,14 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import { supabase } from '../lib/supabase'
 import Icon from './Icon'
 import './ReviewForm.css'
+
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+const emailjsConfigured = EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY
 
 function detectPlatform(url) {
   const lower = url.toLowerCase()
@@ -63,6 +70,28 @@ export default function ReviewForm({ onSubmitted, onClose }) {
     setProfileUrl('')
     setReview('')
     setRating(5)
+
+    // Send email notification (best-effort, won't break submission)
+    if (emailjsConfigured) {
+      try {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            to_email: 'support.oryntal@agency.org.in',
+            from_name: name.trim(),
+            subject: 'New Review Submitted',
+            review_text: review.trim(),
+            rating,
+            profile_url: profileUrl.trim(),
+          },
+          EMAILJS_PUBLIC_KEY
+        )
+      } catch (err) {
+        console.error('EmailJS notification failed (review):', err)
+      }
+    }
+
     if (onSubmitted) onSubmitted()
   }
 
