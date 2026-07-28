@@ -151,6 +151,24 @@
 
 .mobile-menu button:hover { color: var(--text); background: rgba(201, 168, 76, 0.08); }
 
+.mobile-menu a {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--rsm);
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.mobile-menu a:hover { color: var(--text); background: rgba(201, 168, 76, 0.08); }
+
 .mobile-menu button.mobile-cta {
   background: linear-gradient(135deg, var(--gold3), var(--gold));
   color: #06070f;

@@ -111,7 +111,6 @@ export default function Home() {
               <button className="btn-gold" onClick={() => go('/services')}>
                 Explore Services <Icon name="arrowRight" size={16} />
               </button>
-              <button className="btn-ghost" onClick={() => go('/contact')}>Let&apos;s Talk</button>
               <a href="https://oryntal-portfolio-showcase.vercel.app/" target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ textDecoration: 'none' }}>
                 Check Portfolio <Icon name="arrowRight" size={16} />
               </a>

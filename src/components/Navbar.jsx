@@ -32,6 +32,7 @@ export default function Navbar() {
         <li><NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
         <li><NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink></li>
         <li><NavLink to="/services" className={({ isActive }) => isActive ? 'active' : ''}>Services</NavLink></li>
+        <li><a href="https://oryntal-portfolio-showcase.vercel.app/" target="_blank" rel="noopener noreferrer">Portfolio</a></li>
         <li>
           <NavLink to="/contact" className={({ isActive }) => `nav-cta ${isActive ? 'active' : ''}`}>
             Contact Us
@@ -53,6 +54,7 @@ export default function Navbar() {
         <button onClick={() => handleNav('/')}>Home</button>
         <button onClick={() => handleNav('/about')}>About</button>
         <button onClick={() => handleNav('/services')}>Services</button>
+        <a href="https://oryntal-portfolio-showcase.vercel.app/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Portfolio</a>
         <button onClick={() => handleNav('/contact')} className="mobile-cta">Contact Us</button>
       </div>
     </nav>
