@@ -167,16 +167,16 @@ export default function About() {
           </div>
           <div className="founders-grid">
             {FOUNDERS.map((founder) => (
-              <div className="glass founder-card reveal" key={founder.name}>
+              <a className="glass founder-card reveal founder-card-link" href={founder.linkedin} target="_blank" rel="noreferrer" key={founder.name}>
                 <div className="founder-avatar">{founder.initials}</div>
-                <a className="founder-name founder-link" href={founder.linkedin} target="_blank" rel="noreferrer">{founder.name}</a>
+                <div className="founder-name">{founder.name}</div>
                 <div className="founder-role">{founder.role}</div>
                 <ul className="founder-bullets">
                   {founder.bullets.map((bullet) => (
                     <li key={bullet}><span className="bullet-dot" /> {bullet}</li>
                   ))}
                 </ul>
-              </div>
+              </a>
             ))}
           </div>
         </div>
