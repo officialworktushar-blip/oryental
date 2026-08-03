@@ -239,7 +239,7 @@ export default function Contact() {
                   <h3 className="form-success-title">Message Sent!</h3>
                   <p className="form-success-body">
                     Thank you for reaching out. Your message has been delivered to{' '}
-                    <a href={`mailto:${CONTACT_EMAIL}`} className="gold-text">{CONTACT_EMAIL}</a>.
+                    <span className="gold-text">{CONTACT_EMAIL}</span>.
                     We'll get back to you within 24 business hours.
                   </p>
                   <button className="btn-gold" style={{ marginTop: 24 }} onClick={resetForm}>
@@ -251,8 +251,7 @@ export default function Contact() {
                   <div className="form-header">
                     <div className="tag"><span className="tag-dot" /> Send a Message</div>
                     <p className="form-destination">
-                      Delivered to{' '}
-                      <a href={`mailto:${CONTACT_EMAIL}`} className="gold-text">{CONTACT_EMAIL}</a>
+                      Delivered to <span className="gold-text">{CONTACT_EMAIL}</span>
                     </p>
                   </div>
                   <form onSubmit={submitForm} className="contact-form" noValidate>
