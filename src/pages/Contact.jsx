@@ -126,6 +126,8 @@ export default function Contact() {
     setFormError('')
     setFormStatus('sending')
 
+    let responseData = null
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -139,14 +141,18 @@ export default function Contact() {
         }),
       })
 
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || 'Something went wrong. Please try again.')
+      responseData = await res.json().catch(() => null)
+
+      if (!res.ok || !responseData?.ok) {
+        throw new Error(responseData?.error || `Request failed with status ${res.status}`)
       }
 
       setFormStatus('success')
     } catch (err) {
-      console.error('Contact submit failed:', err)
+      console.error('Contact submit failed. Full error:', err)
+      if (responseData) {
+        console.error('Contact submit failed. API response body:', responseData)
+      }
       setFormStatus('error')
       setFormError(err.message || 'Something went wrong. Please email us directly at ' + CONTACT_EMAIL)
     }

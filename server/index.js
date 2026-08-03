@@ -10,6 +10,8 @@ const app = express()
 
 app.use(express.json())
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function escapeHtml(value) {
@@ -19,6 +21,42 @@ function escapeHtml(value) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
+}
+
+function readSmtpConfig() {
+  const required = {
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_SECURE: process.env.SMTP_SECURE,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASS: process.env.SMTP_PASS,
+    CONTACT_RECEIVER_EMAIL: process.env.CONTACT_RECEIVER_EMAIL,
+  }
+
+  const missing = Object.entries(required).filter(([, value]) => value === undefined || value === '')
+  if (missing.length > 0) {
+    const names = missing.map(([key]) => key).join(', ')
+    throw new Error(
+      `Missing required SMTP environment variable(s): ${names}. ` +
+      'Check your .env.local file or your hosting environment variables.'
+    )
+  }
+
+  const port = Number.parseInt(required.SMTP_PORT, 10)
+  if (!Number.isInteger(port) || port <= 0 || port > 65535) {
+    throw new Error(`Invalid SMTP_PORT "${required.SMTP_PORT}". Expected a number between 1 and 65535.`)
+  }
+
+  const secure = String(required.SMTP_SECURE).toLowerCase() === 'true'
+
+  return {
+    host: required.SMTP_HOST,
+    port,
+    secure,
+    user: required.SMTP_USER,
+    pass: required.SMTP_PASS,
+    receiver: required.CONTACT_RECEIVER_EMAIL,
+  }
 }
 
 app.post('/api/contact', async (req, res) => {
@@ -37,22 +75,23 @@ app.post('/api/contact', async (req, res) => {
     return res.status(400).json({ ok: false, error: 'One or more fields exceed the maximum length.' })
   }
 
-  const host = process.env.SMTP_HOST
-  const port = Number.parseInt(process.env.SMTP_PORT, 10)
-  const secure = String(process.env.SMTP_SECURE).toLowerCase() === 'true'
-  const user = process.env.SMTP_USER
-  const pass = process.env.SMTP_PASS
-  const receiver = process.env.CONTACT_RECEIVER_EMAIL
-
-  if (!host || !port || !user || !pass || !receiver) {
-    return res.status(500).json({ ok: false, error: 'Server SMTP configuration is incomplete.' })
+  let config
+  try {
+    config = readSmtpConfig()
+  } catch (err) {
+    console.error('SMTP config error:', err.message)
+    return res.status(500).json({
+      ok: false,
+      error: 'Server SMTP configuration is incomplete.',
+      ...(!isProduction && { debug: err.message }),
+    })
   }
 
   const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth: { user, pass },
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    auth: { user: config.user, pass: config.pass },
   })
 
   const cleanName = name.trim()
@@ -85,8 +124,8 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: `Oryntal Website <${user}>`,
-      to: receiver,
+      from: `Oryntal Website <${config.user}>`,
+      to: config.receiver,
       replyTo: cleanEmail,
       subject: `New contact message from ${cleanName}`,
       text: bodyText,
@@ -94,8 +133,19 @@ app.post('/api/contact', async (req, res) => {
     })
     return res.status(200).json({ ok: true, message: 'Your message has been sent.' })
   } catch (err) {
-    console.error('SMTP send failed:', err)
-    return res.status(502).json({ ok: false, error: 'Could not send the email right now. Please try again later.' })
+    console.error('SMTP send failed:', {
+      message: err.message,
+      code: err.code,
+      response: err.response,
+      command: err.command,
+      host: config.host,
+      port: config.port,
+    })
+    return res.status(502).json({
+      ok: false,
+      error: 'Could not send the email right now. Please try again later.',
+      ...(!isProduction && { debug: err.message }),
+    })
   }
 })
 
