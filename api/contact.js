@@ -135,19 +135,26 @@ module.exports = async (req, res) => {
     })
     return res.status(200).json({ ok: true, message: 'Your message has been sent.' })
   } catch (err) {
+    console.error(err)
     console.error('SMTP send failed:', {
       message: err.message,
       code: err.code,
       response: err.response,
-      stack: err.stack,
+      responseCode: err.responseCode,
       command: err.command,
+      stack: err.stack,
       host: config.host,
       port: config.port,
     })
     return res.status(502).json({
       ok: false,
       error: 'Could not send the email right now. Please try again later.',
-      debug: err.message,
+      debug: {
+        message: err.message,
+        ...(err.code !== undefined && { code: err.code }),
+        ...(err.responseCode !== undefined && { responseCode: err.responseCode }),
+        ...(err.command !== undefined && { command: err.command }),
+      },
     })
   }
 }
