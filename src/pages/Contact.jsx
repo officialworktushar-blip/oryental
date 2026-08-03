@@ -1,21 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import emailjs from '@emailjs/browser'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
 import Icon from '../components/Icon'
 import logo from '../assets/oryntal-logo.png'
 import './Contact.css'
-
-// ─────────────────────────────────────────────────────────────
-// EmailJS — reads from VITE_EMAILJS_* env vars (see .env.example)
-// Fallback: opens mailto: link if env vars are not set
-// ─────────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-
-const emailjsConfigured = EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY
 
 const CONTACT_EMAIL = 'support.oryntal@agency.org.in'
 
@@ -130,43 +119,36 @@ export default function Contact() {
   const submitForm = async (e) => {
     e.preventDefault()
     const { fname, email, message } = formData
-    if (!fname || !email || !message) {
+    if (!fname.trim() || !email.trim() || !message.trim()) {
       setFormError('Please fill in your name, email, and message.')
       return
     }
     setFormError('')
     setFormStatus('sending')
 
-    // Fallback to mailto when EmailJS is not configured
-    if (!emailjsConfigured) {
-      const sub  = encodeURIComponent(`New Project Inquiry from ${fname} ${formData.lname} - Oryntal`)
-      const body = encodeURIComponent(
-        `Name: ${fname} ${formData.lname}\nEmail: ${email}\nCompany: ${formData.company}\nService: ${formData.service}\n\nMessage:\n${message}`
-      )
-      window.open(`mailto:${CONTACT_EMAIL}?subject=${sub}&body=${body}`)
-      setFormStatus('success')
-      return
-    }
-
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          to_email:  CONTACT_EMAIL,
-          from_name: `${fname} ${formData.lname}`.trim(),
-          from_email: email,
-          company:   formData.company || 'Not provided',
-          service:   formData.service || 'Not specified',
-          message,
-        },
-        EMAILJS_PUBLIC_KEY
-      )
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${fname} ${formData.lname}`.trim(),
+          email: email.trim(),
+          company: formData.company || 'Not provided',
+          service: formData.service || 'Not specified',
+          message: message.trim(),
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'Something went wrong. Please try again.')
+      }
+
       setFormStatus('success')
     } catch (err) {
-      console.error('EmailJS error:', err)
+      console.error('Contact submit failed:', err)
       setFormStatus('error')
-      setFormError('Something went wrong. Please email us directly at ' + CONTACT_EMAIL)
+      setFormError(err.message || 'Something went wrong. Please email us directly at ' + CONTACT_EMAIL)
     }
   }
 
@@ -227,7 +209,7 @@ export default function Contact() {
               <div className="tag"><span className="tag-dot" /> Let&apos;s Talk</div>
               <h2 className="section-heading">Ready to Build Something <span className="gold-text">Extraordinary?</span></h2>
               <p className="section-sub contact-intro-copy">
-                Share a few details and your message will open directly to <span className="gold-text">{CONTACT_EMAIL}</span> in your email app.
+                Share a few details and we'll get back to you within 24 business hours.
               </p>
               <div className="gold-line" />
               <div className="info-cards">
@@ -269,7 +251,7 @@ export default function Contact() {
                   <div className="form-header">
                     <div className="tag"><span className="tag-dot" /> Send a Message</div>
                     <p className="form-destination">
-                      Sends directly to{' '}
+                      Delivered to{' '}
                       <a href={`mailto:${CONTACT_EMAIL}`} className="gold-text">{CONTACT_EMAIL}</a>
                     </p>
                   </div>
