@@ -139,6 +139,7 @@ module.exports = async (req, res) => {
       message: err.message,
       code: err.code,
       response: err.response,
+      stack: err.stack,
       command: err.command,
       host: config.host,
       port: config.port,
@@ -146,7 +147,7 @@ module.exports = async (req, res) => {
     return res.status(502).json({
       ok: false,
       error: 'Could not send the email right now. Please try again later.',
-      ...(process.env.NODE_ENV !== 'production' && { debug: err.message }),
+      debug: err.message,
     })
   }
 }
