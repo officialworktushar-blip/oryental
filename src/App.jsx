@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -6,7 +7,8 @@ import Services from './pages/Services'
 import Contact from './pages/Contact'
 import Reviews from './pages/Reviews'
 import NotFound from './pages/NotFound'
-import './App.css'
+
+const Styleguide = import.meta.env.DEV ? lazy(() => import('./pages/Styleguide')) : null
 
 function App() {
   return (
@@ -19,6 +21,16 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/reviews" element={<Reviews />} />
+          {import.meta.env.DEV && (
+            <Route
+              path="/styleguide"
+              element={
+                <Suspense fallback={null}>
+                  <Styleguide />
+                </Suspense>
+              }
+            />
+          )}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

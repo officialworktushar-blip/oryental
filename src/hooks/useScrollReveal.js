@@ -27,6 +27,18 @@ export function useScrollReveal(options = {}) {
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px', ...optionsRef.current }
     )
 
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            sectionObserver.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12 }
+    )
+
     const items = el.querySelectorAll('.reveal')
     items.forEach((item, i) => {
       item.style.transitionDelay = `${(i % STAGGER_CAP) * STAGGER_MS}ms`
@@ -35,7 +47,13 @@ export function useScrollReveal(options = {}) {
 
     if (el.classList.contains('reveal')) observer.observe(el)
 
-    return () => observer.disconnect()
+    el.querySelectorAll('section').forEach((s) => sectionObserver.observe(s))
+    if (el.tagName === 'SECTION') sectionObserver.observe(el)
+
+    return () => {
+      observer.disconnect()
+      sectionObserver.disconnect()
+    }
   }, [])
 
   return ref

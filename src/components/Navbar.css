@@ -3,12 +3,7 @@
   top: 0;
   z-index: 100;
   background: var(--ivory);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.navbar--scrolled {
-  border-bottom-color: var(--sand);
+  border-bottom: 1px solid var(--sand);
 }
 
 .navbar__inner {
@@ -22,9 +17,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--sp-3);
+  padding: 0;
   background: none;
   border: 0;
-  padding: 0;
   cursor: pointer;
 }
 
@@ -77,11 +72,11 @@
 .navbar__burger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
   width: 40px;
   height: 40px;
-  align-items: center;
-  justify-content: center;
   background: none;
   border: 0;
   cursor: pointer;
@@ -92,6 +87,15 @@
   height: 2px;
   background: var(--ink);
   transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar__burger.is-open {
+  position: relative;
+  z-index: 130;
+}
+
+.navbar__burger.is-open span {
+  background: var(--ivory);
 }
 
 .navbar__burger.is-open span:nth-child(1) {
@@ -106,35 +110,38 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Full-screen ink menu */
 .navbar__mobile {
-  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
   flex-direction: column;
   gap: var(--sp-2);
-  padding: var(--sp-4) var(--sp-6) var(--sp-6);
-  background: var(--ivory);
-  border-bottom: 1px solid var(--sand);
+  padding: 96px var(--sp-6) var(--sp-16);
+  background: var(--ink);
+  color: var(--ivory);
+  overflow-y: auto;
 }
 
-.navbar__mobile button,
-.navbar__mobile a {
-  text-align: left;
+.navbar__mobile-link {
   padding: var(--sp-3) 0;
-  background: none;
-  border: 0;
-  font-size: 1rem;
+  text-align: left;
+  font-size: 1.5rem;
   font-weight: 500;
-  color: var(--ink);
+  color: var(--ivory);
   text-decoration: none;
   cursor: pointer;
+  border-bottom: 1px solid var(--graphite);
 }
 
-.navbar__mobile .btn {
+.navbar__mobile-link:hover {
+  color: var(--gold-bright);
+}
+
+.navbar__mobile-cta {
   justify-content: center;
-  margin-top: var(--sp-2);
-}
-
-.navbar__mobile.is-open {
-  display: flex;
+  margin-top: var(--sp-6);
 }
 
 @media (max-width: 768px) {

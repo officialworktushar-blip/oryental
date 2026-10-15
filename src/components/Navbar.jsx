@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/oryntal-logo.png'
 import './Navbar.css'
@@ -11,17 +11,18 @@ const NAV_ITEMS = [
 
 const PORTFOLIO_URL = 'https://oryntal-portfolio-showcase.vercel.app/'
 
+const FOCUSABLE = 'a[href], button:not([disabled])'
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef(null)
+  const burgerRef = useRef(null)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
-    handler()
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
-  }, [])
+  const closeMenu = () => {
+    setMenuOpen(false)
+    burgerRef.current?.focus()
+  }
 
   const handleNav = (path) => {
     setMenuOpen(false)
@@ -29,11 +30,53 @@ export default function Navbar() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  /* Focus trap + ESC + scroll lock while the mobile menu is open */
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const container = menuRef.current
+    const getFocusable = () =>
+      container ? Array.from(container.querySelectorAll(FOCUSABLE)) : []
+
+    getFocusable()[0]?.focus()
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        closeMenu()
+        return
+      }
+      if (e.key !== 'Tab') return
+
+      const focusable = getFocusable()
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previousOverflow
+    }
+  }, [menuOpen])
+
   return (
-    <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
+    <header className="navbar">
       <nav className="navbar__inner container" aria-label="Primary">
         <button className="navbar__brand" onClick={() => handleNav('/')} aria-label="Oryntal home">
-          <img src={logo} alt="Oryntal Logo" className="navbar__logo" width="32" height="32" />
+          <img src={logo} alt="" className="navbar__logo" width="32" height="32" />
           <span className="navbar__brand-text">
             ORY<span className="navbar__brand-n">N</span>TAL
           </span>
@@ -60,10 +103,12 @@ export default function Navbar() {
         </ul>
 
         <button
+          ref={burgerRef}
           className={`navbar__burger${menuOpen ? ' is-open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => (menuOpen ? closeMenu() : setMenuOpen(true))}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
+          aria-controls="navbar-mobile-menu"
         >
           <span />
           <span />
@@ -71,19 +116,34 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <div className={`navbar__mobile${menuOpen ? ' is-open' : ''}`}>
-        {NAV_ITEMS.map((item) => (
-          <button key={item.to} onClick={() => handleNav(item.to)}>
-            {item.label}
+      {menuOpen && (
+        <div
+          id="navbar-mobile-menu"
+          className="navbar__mobile"
+          ref={menuRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
+          {NAV_ITEMS.map((item) => (
+            <button key={item.to} className="navbar__mobile-link" onClick={() => handleNav(item.to)}>
+              {item.label}
+            </button>
+          ))}
+          <a
+            className="navbar__mobile-link"
+            href={PORTFOLIO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            Portfolio
+          </a>
+          <button className="btn btn-primary navbar__mobile-cta" onClick={() => handleNav('/contact')}>
+            Contact Us
           </button>
-        ))}
-        <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
-          Portfolio
-        </a>
-        <button onClick={() => handleNav('/contact')} className="btn btn-primary">
-          Contact Us
-        </button>
-      </div>
+        </div>
+      )}
     </header>
   )
 }

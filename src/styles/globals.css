@@ -2,9 +2,12 @@
 
 /* =============================================
    ORYNTAL — GLOBAL STYLES
-   Flat design · minimalism · mobile-first
+   Flat design · minimalism · mobile-first.
+   Single source of primitive classes. No hardcoded
+   colour/radius/spacing values (see tokens.css).
    ============================================= */
 
+/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -16,10 +19,11 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.6;
@@ -27,26 +31,39 @@ body {
   background: var(--ivory);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 img,
 svg,
-video {
+video,
+canvas {
   display: block;
   max-width: 100%;
 }
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
-ul {
+ul,
+ol {
   list-style: none;
 }
 
-button {
+button,
+input,
+select,
+textarea {
   font: inherit;
   color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
 ::selection {
@@ -54,7 +71,12 @@ button {
   color: var(--ink);
 }
 
-/* ── Typography ── */
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 2px;
+}
+
+/* ── Typography & type scale ── */
 h1,
 h2,
 h3,
@@ -63,6 +85,7 @@ h4 {
   font-weight: 600;
   line-height: 1.15;
   color: inherit;
+  letter-spacing: -0.01em;
 }
 
 h1 {
@@ -77,8 +100,44 @@ h3 {
   font-size: clamp(1.3rem, 2vw, 1.6rem);
 }
 
+h4 {
+  font-size: 1.1rem;
+}
+
 p {
   line-height: 1.6;
+}
+
+.text-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.text-lead {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 620px;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xs {
+  font-size: 0.78rem;
+}
+
+.text-caption {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.section--ink .text-lead,
+.section--ink .text-caption {
+  color: var(--sand);
 }
 
 /* ── Layout ── */
@@ -116,6 +175,14 @@ p {
 .section-head--center {
   margin-inline: auto;
   text-align: center;
+}
+
+.section-head .text-lead {
+  margin-top: var(--sp-4);
+}
+
+.section-head--center .text-lead {
+  margin-inline: auto;
 }
 
 /* ── Eyebrow ── */
@@ -163,12 +230,13 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
-  padding: 12px 24px;
+  padding: 12px var(--sp-6);
   border-radius: var(--radius-btn);
   border: 1px solid transparent;
   font-family: 'Outfit', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
+  line-height: 1;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -179,13 +247,18 @@ p {
   outline-offset: 2px;
 }
 
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .btn-primary {
   background: var(--gold);
   border-color: var(--gold);
   color: var(--ink);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background: var(--gold-bright);
   border-color: var(--gold-bright);
 }
@@ -196,9 +269,21 @@ p {
   color: var(--ink);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background: var(--ink);
+  border-color: var(--ink);
   color: var(--ivory);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--ink);
+  padding-inline: var(--sp-3);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--gold-deep);
 }
 
 .section--ink .btn-secondary {
@@ -206,9 +291,18 @@ p {
   color: var(--ivory);
 }
 
-.section--ink .btn-secondary:hover {
+.section--ink .btn-secondary:hover:not(:disabled) {
   background: var(--ivory);
+  border-color: var(--ivory);
   color: var(--ink);
+}
+
+.section--ink .btn-ghost {
+  color: var(--ivory);
+}
+
+.section--ink .btn-ghost:hover:not(:disabled) {
+  color: var(--gold-bright);
 }
 
 .btn-row {
@@ -233,7 +327,7 @@ p {
 }
 
 .card-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
   font-size: 1.35rem;
   margin-bottom: var(--sp-2);
@@ -263,6 +357,98 @@ p {
 .section--ink .icon-badge {
   border-color: var(--graphite);
   color: var(--gold);
+}
+
+/* ── Chips ── */
+.chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 6px var(--sp-3);
+  border: 1px solid var(--sand);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: transparent;
+}
+
+.section--ink .chip,
+.chip--dark {
+  border-color: var(--graphite);
+  color: var(--sand);
+}
+
+/* ── Form fields ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.field__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.field__input,
+.field__select,
+.field__textarea {
+  width: 100%;
+  padding: 12px var(--sp-4);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-btn);
+  background: var(--surface-light);
+  color: var(--ink);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.field__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.field__input::placeholder,
+.field__textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.field__input:focus-visible,
+.field__select:focus-visible,
+.field__textarea:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 2px;
+  border-color: var(--gold-deep);
+}
+
+.field__hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.field__error {
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+.section--ink .field__label {
+  color: var(--ivory);
+}
+
+.section--ink .field__input,
+.section--ink .field__select,
+.section--ink .field__textarea {
+  background: var(--charcoal);
+  border-color: var(--graphite);
+  color: var(--ivory);
 }
 
 /* ── Grids ── */
@@ -304,7 +490,8 @@ p {
   transition: background-size 700ms var(--ease) 250ms;
 }
 
-.is-visible .hl--draw {
+.is-visible .hl--draw,
+.hl--draw.is-visible {
   background-size: 100% 100%;
 }
 
@@ -385,6 +572,14 @@ p {
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mx-auto {
+  margin-inline: auto;
 }
 
 /* ── Responsive ── */
