@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
 import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/Footer'
@@ -67,32 +68,53 @@ const CONTACT_INFO = [
   { icon: 'globe', label: 'Serving', value: 'Clients Worldwide • 12+ Industries' },
 ]
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export default function Contact() {
   usePageMeta('Contact — Oryntal', "Share a few details and we'll get back to you within 24 business hours.")
   const [formData, setFormData] = useState({ fname: '', lname: '', email: '', company: '', service: '', message: '' })
+  const [errors, setErrors] = useState({})
+  const [honeypot, setHoneypot] = useState('')
   const [formError, setFormError] = useState('')
   const [formStatus, setFormStatus] = useState('idle')
   const pageRef = useRevealOnMount()
 
-  const handleChange = (e) => setFormData((p) => ({ ...p, [e.target.name]: e.target.value }))
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((p) => ({ ...p, [name]: value }))
+    setErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev))
+  }
 
-  const resetForm = () => {
-    setFormData({ fname: '', lname: '', email: '', company: '', service: '', message: '' })
-    setFormStatus('idle')
-    setFormError('')
+  const validate = () => {
+    const next = {}
+    if (!formData.fname.trim()) next.fname = 'Please complete this field.'
+    if (!formData.email.trim()) next.email = 'Please complete this field.'
+    else if (!EMAIL_RE.test(formData.email.trim())) next.email = 'Please enter a valid email address.'
+    if (!formData.message.trim()) next.message = 'Please complete this field.'
+    return next
   }
 
   const submitForm = async (e) => {
     e.preventDefault()
-    const { fname, email, message } = formData
-    if (!fname.trim() || !email.trim() || !message.trim()) {
+
+    // Honeypot: silently accept bots without sending (ignored server-side when empty).
+    if (honeypot.trim()) {
+      setFormStatus('success')
+      return
+    }
+
+    const nextErrors = validate()
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors)
       setFormError('Please fill in your name, email, and message.')
       return
     }
+
+    setErrors({})
     setFormError('')
     setFormStatus('sending')
 
-    let responseData = null
+    const { fname, email, message } = formData
 
     try {
       const res = await fetch('/api/contact', {
@@ -107,20 +129,16 @@ export default function Contact() {
         }),
       })
 
-      responseData = await res.json().catch(() => null)
+      const responseData = await res.json()
 
-      if (!res.ok || !responseData?.ok) {
-        throw new Error(responseData?.error || `Request failed with status ${res.status}`)
+      if (!res.ok || !responseData.success) {
+        throw new Error(responseData.error || 'Something went wrong.')
       }
 
       setFormStatus('success')
     } catch (err) {
-      console.error('Contact submit failed. Full error:', err)
-      if (responseData) {
-        console.error('Contact submit failed. API response body:', responseData)
-      }
+      setFormError(err.message || 'Something went wrong. Please try again or email us directly.')
       setFormStatus('error')
-      setFormError(err.message || 'Something went wrong. Please email us directly at ' + CONTACT_EMAIL)
     }
   }
 
@@ -129,8 +147,15 @@ export default function Contact() {
 
   return (
     <div className="contact page-enter" ref={pageRef}>
+      {/* Hero + static three-column block (former slideshow) */}
       <section className="section section--ivory">
         <div className="container">
+          <div className="section-head section-head--center">
+            <h1>
+              Ready to Build Something <Hl>Extraordinary?</Hl>
+            </h1>
+            <p className="lead">Share a few details and we&apos;ll get back to you within 24 business hours.</p>
+          </div>
           <div className="grid grid--3 contact-intro">
             {SLIDES.map((slide) => (
               <article className="contact-intro__block reveal" key={slide.title}>
@@ -142,20 +167,175 @@ export default function Contact() {
                     <li key={point}>{point}</li>
                   ))}
                 </ul>
+                <div className="btn-row contact-intro__actions">
+                  <a className="btn btn-primary" href="#contact-form">
+                    Get in Touch
+                  </a>
+                  <Link className="btn btn-secondary" to="/services">
+                    View Services
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Form (left) + info cards (right) */}
       <section className="section section--white" id="contact-form">
         <div className="container contact-grid">
+          <div className="card contact-form-card reveal">
+            {formStatus === 'success' ? (
+              <div className="form-success">
+                <span className="form-success__icon">
+                  <Icon name="checkCircle" size={32} />
+                </span>
+                <h3>Message Sent!</h3>
+                <p className="card-text">
+                  Thank you for reaching out. Your message has been delivered to support.oryntal@agency.org.in. We&apos;ll
+                  get back to you within 24 business hours.
+                </p>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={submitForm} noValidate>
+                <div className="eyebrow">Send a Message</div>
+                <p className="form-destination">Delivered to support.oryntal@agency.org.in</p>
+                <p className="visually-hidden" role="status" aria-live="polite">
+                  {formStatus === 'sending' ? 'Sending your message…' : ''}
+                </p>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="fname">First Name</label>
+                    <input
+                      id="fname"
+                      name="fname"
+                      type="text"
+                      placeholder="Rahul"
+                      value={formData.fname}
+                      onChange={handleChange}
+                      aria-invalid={Boolean(errors.fname)}
+                      aria-describedby={errors.fname ? 'fname-error' : undefined}
+                      className={errors.fname ? 'is-invalid' : undefined}
+                    />
+                    {errors.fname && (
+                      <p className="field-error" id="fname-error">
+                        {errors.fname}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="lname">Last Name</label>
+                    <input
+                      id="lname"
+                      name="lname"
+                      type="text"
+                      placeholder="Kapoor"
+                      value={formData.lname}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="rahul@company.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? 'email-error' : undefined}
+                    className={errors.email ? 'is-invalid' : undefined}
+                  />
+                  {errors.email && (
+                    <p className="field-error" id="email-error">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="company">Company / Organisation</label>
+                  <input
+                    id="company"
+                    name="company"
+                    type="text"
+                    placeholder="FinEdge Solutions"
+                    value={formData.company}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="service">Service Interested In</label>
+                  <select id="service" name="service" value={formData.service} onChange={handleChange}>
+                    <option value="">Select a service...</option>
+                    <option>AI LLM Models</option>
+                    <option>NLP Pipelines</option>
+                    <option>Neural AI Architectures</option>
+                    <option>Chatbots and AI Agents</option>
+                    <option>Website Design</option>
+                    <option>App Design iOS and Android</option>
+                    <option>Full Package</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="message">Tell Us About Your Project</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    placeholder="Describe your project, goals, and timeline..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    aria-invalid={Boolean(errors.message)}
+                    aria-describedby={errors.message ? 'message-error' : undefined}
+                    className={errors.message ? 'is-invalid' : undefined}
+                  />
+                  {errors.message && (
+                    <p className="field-error" id="message-error">
+                      {errors.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Honeypot — hidden from users, ignored server-side when empty */}
+                <div className="form-honeypot" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
+                {formError && (
+                  <div className="form-error" role="alert">
+                    {formError}
+                  </div>
+                )}
+
+                <button type="submit" className="btn btn-primary form-submit" disabled={formStatus === 'sending'}>
+                  {formStatus === 'sending' ? 'Sending…' : (
+                    <>
+                      Send Message <Icon name="arrowRight" size={16} />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+
           <div className="contact-info reveal">
             <div className="eyebrow">Let&apos;s Talk</div>
-            <h2>
-              Ready to Build Something <Hl>Extraordinary?</Hl>
-            </h2>
-            <p className="lead">Share a few details and we&apos;ll get back to you within 24 business hours.</p>
             <ul className="info-cards">
               {CONTACT_INFO.map((info) => (
                 <li className="card info-card" key={info.label}>
@@ -175,118 +355,6 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="card contact-form-card reveal">
-            {formStatus === 'success' ? (
-              <div className="form-success">
-                <span className="form-success__icon">
-                  <Icon name="checkCircle" size={40} />
-                </span>
-                <h3>Message Sent!</h3>
-                <p className="card-text">
-                  Thank you for reaching out. Your message has been delivered to{' '}
-                  <strong>{CONTACT_EMAIL}</strong>. We&apos;ll get back to you within 24 business hours.
-                </p>
-                <button className="btn btn-primary" style={{ marginTop: 'var(--sp-6)' }} onClick={resetForm}>
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="eyebrow">Send a Message</div>
-                <p className="form-destination">
-                  Delivered to <strong>{CONTACT_EMAIL}</strong>
-                </p>
-                <form onSubmit={submitForm} className="contact-form" noValidate>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="fname">First Name</label>
-                      <input
-                        id="fname"
-                        name="fname"
-                        type="text"
-                        placeholder="Rahul"
-                        value={formData.fname}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="lname">Last Name</label>
-                      <input
-                        id="lname"
-                        name="lname"
-                        type="text"
-                        placeholder="Kapoor"
-                        value={formData.lname}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="rahul@company.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="company">Company / Organisation</label>
-                    <input
-                      id="company"
-                      name="company"
-                      type="text"
-                      placeholder="FinEdge Solutions"
-                      value={formData.company}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="service">Service Interested In</label>
-                    <select id="service" name="service" value={formData.service} onChange={handleChange}>
-                      <option value="">Select a service...</option>
-                      <option>AI LLM Models</option>
-                      <option>NLP Pipelines</option>
-                      <option>Neural AI Architectures</option>
-                      <option>Chatbots and AI Agents</option>
-                      <option>Website Design</option>
-                      <option>App Design iOS and Android</option>
-                      <option>Full Package</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="message">Tell Us About Your Project</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      placeholder="Describe your project, goals, and timeline..."
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  {formError && (
-                    <div className="form-error" role="alert">
-                      {formError}
-                    </div>
-                  )}
-                  <button type="submit" className="btn btn-primary form-submit" disabled={formStatus === 'sending'}>
-                    {formStatus === 'sending' ? 'Sending…' : (
-                      <>
-                        Send Message <Icon name="arrowRight" size={16} />
-                      </>
-                    )}
-                  </button>
-                </form>
-              </>
-            )}
           </div>
         </div>
       </section>
@@ -342,9 +410,9 @@ export default function Contact() {
                 </div>
               </article>
             ))}
-
             {textTestimonials.map((t) => (
               <article className="card testimonial reveal" key={t.name}>
+                <div className="eyebrow">Client Review</div>
                 <div className="stars" aria-label={`${t.stars} out of 5 stars`}>
                   {Array.from({ length: t.stars }, (_, i) => (
                     <span key={i} className="stars__star is-filled" aria-hidden="true">
@@ -384,6 +452,9 @@ export default function Contact() {
                 </span>
                 <h3 className="card-title">{card.title}</h3>
                 <p className="card-text">{card.text}</p>
+                <a className="card-link" href="#contact-form">
+                  Learn more <Icon name="arrowRight" size={16} />
+                </a>
               </article>
             ))}
           </div>

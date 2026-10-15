@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
 import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/Footer'
@@ -39,6 +39,7 @@ export default function Reviews() {
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
+  const dialogRef = useRef(null)
 
   const refreshReviews = async () => {
     if (!supabase) return
@@ -69,9 +70,40 @@ export default function Reviews() {
 
   useEffect(() => {
     if (!showModal) return
+    const previouslyFocused = document.activeElement
     document.body.style.overflow = 'hidden'
+
+    const node = dialogRef.current
+    const getFocusable = () =>
+      node ? Array.from(node.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')) : []
+
+    const focusable = getFocusable()
+    if (focusable.length) focusable[0].focus()
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setShowModal(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+      const items = getFocusable()
+      if (items.length === 0) return
+      const first = items[0]
+      const last = items[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        focusable[focusable.length - 1].focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        focusable[0].focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
     return () => {
+      document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
+      if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus()
     }
   }, [showModal])
 
@@ -105,7 +137,7 @@ export default function Reviews() {
           </div>
 
           {loading ? (
-            <p className="lead" style={{ textAlign: 'center', marginInline: 'auto' }}>
+            <p className="lead" role="status" aria-live="polite" style={{ textAlign: 'center', marginInline: 'auto' }}>
               Loading reviews...
             </p>
           ) : reviews.length > 0 ? (
@@ -140,7 +172,14 @@ export default function Reviews() {
 
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            ref={dialogRef}
+            className="modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Write a Review"
+            onClick={(e) => e.stopPropagation()}
+          >
             <ReviewForm onSubmitted={refreshReviews} onClose={() => setShowModal(false)} />
           </div>
         </div>

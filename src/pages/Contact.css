@@ -22,12 +22,40 @@
   color: var(--gold-deep);
 }
 
-/* Contact grid */
+/* Contact grid — form left, info right */
 .contact-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: var(--sp-16);
   align-items: start;
+}
+
+.contact-intro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+
+/* Free-resource card link */
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gold-deep);
+  transition: color 0.2s ease;
+}
+
+.card-link:hover {
+  color: var(--ink);
+}
+
+.card-link:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 2px;
 }
 
 .info-cards {
@@ -132,6 +160,25 @@
   border-radius: var(--radius-btn);
   color: var(--danger);
   font-size: 0.9rem;
+}
+
+.form-group input.is-invalid,
+.form-group select.is-invalid,
+.form-group textarea.is-invalid {
+  border-color: var(--danger);
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: 0.8rem;
+}
+
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .form-submit {
