@@ -1,7 +1,15 @@
 import { useEffect, useRef } from 'react'
 
+const STAGGER_MS = 80
+const STAGGER_CAP = 6
+
 export function useScrollReveal(options = {}) {
   const ref = useRef(null)
+  const optionsRef = useRef(options)
+
+  useEffect(() => {
+    optionsRef.current = options
+  }, [options])
 
   useEffect(() => {
     const el = ref.current
@@ -16,13 +24,15 @@ export function useScrollReveal(options = {}) {
           }
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px', ...options }
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px', ...optionsRef.current }
     )
 
     const items = el.querySelectorAll('.reveal')
-    items.forEach((item) => observer.observe(item))
+    items.forEach((item, i) => {
+      item.style.transitionDelay = `${(i % STAGGER_CAP) * STAGGER_MS}ms`
+      observer.observe(item)
+    })
 
-    // Also observe the element itself if it has reveal class
     if (el.classList.contains('reveal')) observer.observe(el)
 
     return () => observer.disconnect()
@@ -38,20 +48,36 @@ export function useRevealOnMount() {
     const el = ref.current
     if (!el) return
 
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible')
-            observer.unobserve(entry.target)
+            revealObserver.unobserve(entry.target)
           }
         })
       },
       { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
     )
 
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            sectionObserver.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12 }
+    )
+
     const observeReveal = () => {
-      el.querySelectorAll('.reveal:not(.visible)').forEach((item) => observer.observe(item))
+      const items = el.querySelectorAll('.reveal:not(.visible)')
+      items.forEach((item, i) => {
+        item.style.transitionDelay = `${(i % STAGGER_CAP) * STAGGER_MS}ms`
+        revealObserver.observe(item)
+      })
     }
 
     observeReveal()
@@ -59,8 +85,12 @@ export function useRevealOnMount() {
     const mutationObserver = new MutationObserver(observeReveal)
     mutationObserver.observe(el, { childList: true, subtree: true })
 
+    el.querySelectorAll('section').forEach((s) => sectionObserver.observe(s))
+    if (el.tagName === 'SECTION') sectionObserver.observe(el)
+
     return () => {
-      observer.disconnect()
+      revealObserver.disconnect()
+      sectionObserver.disconnect()
       mutationObserver.disconnect()
     }
   }, [])

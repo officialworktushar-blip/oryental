@@ -1,0 +1,47 @@
+/* =============================================
+   ORYNTAL — DESIGN TOKENS (single source of truth)
+   No hardcoded colour/radius/spacing values anywhere else.
+   ============================================= */
+:root {
+  /* ── Colour ── */
+  --ink: #0B0B0F;
+  --charcoal: #17171C;
+  --graphite: #2A2A31;
+  --gold: #C9A227;
+  --gold-bright: #E2C14B;
+  --gold-deep: #8A6D12;
+  --gold-tint: #F4ECD3;
+  --ivory: #FAF7F0;
+  --sand: #E4DCC8;
+  --text-muted: #5E5B54;
+  --success: #2F7D5B;
+  --danger: #B3412F;
+
+  /* ── Derived surfaces (only place raw white is declared) ── */
+  --surface-light: #FFFFFF;
+  --surface-ink: var(--ink);
+  --surface-charcoal: var(--charcoal);
+
+  /* ── Radius ── */
+  --radius: 8px;
+  --radius-btn: 6px;
+
+  /* ── Spacing scale ── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-24: 96px;
+  --sp-32: 128px;
+
+  /* ── Layout ── */
+  --container: 1200px;
+
+  /* ── Motion ── */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 500ms;
+}

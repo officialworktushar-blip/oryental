@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oryntal.agency.org.in/sitemap.xml

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
+import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/Footer'
 import Icon from '../components/Icon'
-import logo from '../assets/oryntal-logo.png'
+import Hl from '../components/Hl'
+import { claims, isVerified } from '../data/claims'
 import './Services.css'
 
 const SERVICES = [
@@ -89,21 +91,32 @@ const PROCESS = [
   { num: '05', title: 'Scale', text: 'Ongoing optimization, monitoring, and long-term growth partnership.' },
 ]
 
-const WHY_US = [
-  { icon: 'zap', title: 'AI-Accelerated Delivery', text: '60% faster delivery using AI-enhanced development workflows.' },
-  { icon: 'shield', title: 'Enterprise Security', text: 'SOC2-aligned practices, private deployments, and complete data privacy.' },
-  { icon: 'chart', title: 'Outcome-Focused', text: 'Every project is measured against real business metrics, not vanity metrics.' },
-  { icon: 'globe', title: 'Global Experience', text: 'Deployed across 12+ industries in diverse international markets.' },
-]
-
 const TECH_CHIPS = [
-  'GPT-4 / Claude', 'LangChain', 'LlamaIndex', 'PyTorch', 'TensorFlow',
-  'HuggingFace', 'FastAPI', 'React / Next.js', 'Flutter', 'React Native',
-  'Figma', 'AWS / GCP', 'Docker / K8s', 'Pinecone', 'Weaviate',
-  'OpenAI API', 'RAG Systems', 'Vector DBs',
+  'GPT-4 / Claude',
+  'LangChain',
+  'LlamaIndex',
+  'PyTorch',
+  'TensorFlow',
+  'HuggingFace',
+  'FastAPI',
+  'React / Next.js',
+  'Flutter',
+  'React Native',
+  'Figma',
+  'AWS / GCP',
+  'Docker / K8s',
+  'Pinecone',
+  'Weaviate',
+  'OpenAI API',
+  'RAG Systems',
+  'Vector DBs',
 ]
 
 export default function Services() {
+  usePageMeta(
+    'Services — Oryntal',
+    'Six specialized service lines, each built to transform how your business competes in an AI-first world.'
+  )
   const [activeIdx, setActiveIdx] = useState(0)
   const navigate = useNavigate()
   const pageRef = useRevealOnMount()
@@ -113,144 +126,156 @@ export default function Services() {
   }
   const svc = SERVICES[activeIdx]
 
+  const whyItems = [
+    isVerified(claims.speed.servicesDelivery) && {
+      icon: 'zap',
+      title: claims.speed.servicesDelivery.title,
+      text: claims.speed.servicesDelivery.text,
+    },
+    isVerified(claims.security) && {
+      icon: 'shield',
+      title: claims.security.title,
+      text: claims.security.text,
+    },
+    { icon: 'chart', title: 'Outcome-Focused', text: 'Every project is measured against real business metrics, not vanity metrics.' },
+    { icon: 'globe', title: 'Global Experience', text: 'Deployed across 12+ industries in diverse international markets.' },
+  ].filter(Boolean)
+
   return (
     <div className="services page-enter" ref={pageRef}>
-      <section className="svc-hero">
-        <div className="blob" style={{ width: 600, height: 600, background: 'rgba(201,168,76,0.06)', top: -150, left: -100 }} />
-        <div className="svc-hero-grid">
-          <div className="svc-hero-content">
-            <div className="tag"><span className="tag-dot" /> What We Do</div>
-            <h1>Intelligence <span className="gold-text">Engineered</span> to Deliver</h1>
-            <p>Six specialized service lines, each built to transform how your business competes in an AI-first world.</p>
-            <div className="svc-hero-pills">
-              <div className="svc-hero-pill"><Icon name="brain" size={16} /> AI strategy</div>
-              <div className="svc-hero-pill"><Icon name="palette" size={16} /> Product design</div>
-              <div className="svc-hero-pill"><Icon name="rocket" size={16} /> Production launch</div>
-            </div>
+      <section className="section section--ivory svc-hero">
+        <div className="container">
+          <div className="section-head">
+            <div className="eyebrow">What We Do</div>
+            <h1>
+              Intelligence <Hl>Engineered</Hl> to Deliver
+            </h1>
+            <p className="lead">
+              Six specialized service lines, each built to transform how your business competes in an AI-first world.
+            </p>
           </div>
-
-          <div className="svc-hero-visual">
-            <div className="svc-hero-panel svc-panel-main">
-              <img src={logo} alt="Oryntal Logo" className="svc-panel-logo logo-3d" />
-              <div className="svc-panel-lines" />
-              <div className="svc-panel-copy">Full-stack intelligence</div>
-            </div>
-            <div className="svc-hero-panel svc-panel-card svc-panel-card-a">
-              <Icon name="bot" size={20} />
-              <span>AI systems</span>
-            </div>
-            <div className="svc-hero-panel svc-panel-card svc-panel-card-b">
-              <Icon name="shield" size={20} />
-              <span>Secure delivery</span>
-            </div>
-            <div className="svc-hero-panel svc-panel-card svc-panel-card-c">
-              <Icon name="barChart" size={20} />
-              <span>Growth outcomes</span>
-            </div>
-          </div>
+          <ul className="svc-hero__pills">
+            {['AI strategy', 'Product design', 'Production launch'].map((pill) => (
+              <li key={pill} className="svc-hero__pill">
+                <Icon name={pill === 'AI strategy' ? 'brain' : pill === 'Product design' ? 'palette' : 'rocket'} size={16} />
+                {pill}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section className="section svc-explorer-section">
-        <div className="container">
-          <div className="svc-explorer">
-            <div className="svc-list">
-              {SERVICES.map((service, i) => (
-                <button
-                  key={service.num}
-                  className={`svc-list-item${activeIdx === i ? ' active' : ''}`}
-                  onClick={() => setActiveIdx(i)}
-                >
-                  <span className="svc-list-num">{service.num}</span>
-                  <span className="svc-list-title">{service.title}</span>
-                  <span className="svc-list-arrow"><Icon name="chevronRight" size={18} /></span>
-                </button>
-              ))}
-            </div>
-
-            <div className="glass svc-detail">
-              <div className="svc-detail-tag"><span className="tag-dot" /> {svc.tag} - {svc.num}</div>
-              <h2 className="svc-detail-title">{svc.title}</h2>
-              <p className="svc-detail-desc">{svc.desc}</p>
-              <div className="svc-features">
-                {svc.features.map((feature) => (
-                  <div className="svc-feature-row" key={feature.text}>
-                    <span className="svc-feature-icon"><Icon name={feature.icon} size={18} /></span>
-                    <span className="svc-feature-text">{feature.text}</span>
-                  </div>
-                ))}
-              </div>
-              <button className="btn-gold" onClick={() => go('/contact')}>
-                Start This Project <Icon name="arrowRight" size={16} />
+      <section className="section section--white">
+        <div className="container svc-explorer">
+          <div className="svc-explorer__list">
+            {SERVICES.map((service, i) => (
+              <button
+                key={service.num}
+                aria-pressed={activeIdx === i}
+                className={`svc-explorer__item${activeIdx === i ? ' is-active' : ''}`}
+                onClick={() => setActiveIdx(i)}
+              >
+                <span className="svc-explorer__num">{service.num}</span>
+                <span className="svc-explorer__title">{service.title}</span>
+                <Icon name="chevronRight" size={18} />
               </button>
+            ))}
+          </div>
+
+          <article className="card svc-detail reveal">
+            <div className="eyebrow">
+              {svc.tag} - {svc.num}
             </div>
-          </div>
+            <h2 className="svc-detail__title">{svc.title}</h2>
+            <p className="svc-detail__desc">{svc.desc}</p>
+            <ul className="svc-detail__features">
+              {svc.features.map((feature) => (
+                <li key={feature.text}>
+                  <span className="svc-detail__icon">
+                    <Icon name={feature.icon} size={18} />
+                  </span>
+                  {feature.text}
+                </li>
+              ))}
+            </ul>
+            <button className="btn btn-primary" onClick={() => go('/contact')}>
+              Start This Project <Icon name="arrowRight" size={16} />
+            </button>
+          </article>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section section--ink">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> How We Work</div>
-            <h2 className="section-heading">Our <span className="gold-text">Process</span></h2>
+          <div className="section-head section-head--center">
+            <div className="eyebrow">How We Work</div>
+            <h2>
+              Our <Hl>Process</Hl>
+            </h2>
           </div>
-          <div className="process-row">
-            {PROCESS.map((step, i) => (
-              <div className="process-step reveal" key={step.num}>
-                <div className="process-circle">{step.num}</div>
-                {i < PROCESS.length - 1 && <div className="process-connector" />}
-                <div className="process-title">{step.title}</div>
-                <p className="process-text">{step.text}</p>
-              </div>
+          <ol className="process">
+            {PROCESS.map((step) => (
+              <li className="process__step reveal" key={step.num}>
+                <span className="process__num">{step.num}</span>
+                <h3 className="process__title">{step.title}</h3>
+                <p className="process__text">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="section section--ivory">
+        <div className="container">
+          <div className="section-head section-head--center">
+            <div className="eyebrow">Why Choose Us</div>
+            <h2>
+              The Oryntal <Hl>Advantage</Hl>
+            </h2>
+          </div>
+          <div className="grid grid--4">
+            {whyItems.map((item) => (
+              <article className="card reveal" key={item.title}>
+                <span className="icon-badge">
+                  <Icon name={item.icon} size={24} />
+                </span>
+                <h3 className="card-title">{item.title}</h3>
+                <p className="card-text">{item.text}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section section--white">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> Why Choose Us</div>
-            <h2 className="section-heading">The Oryntal <span className="gold-text">Advantage</span></h2>
+          <div className="section-head section-head--center">
+            <div className="eyebrow">Our Stack</div>
+            <h2>
+              Technologies We <Hl>Master</Hl>
+            </h2>
           </div>
-          <div className="why-us-grid">
-            {WHY_US.map((item) => (
-              <div className="glass why-us-card reveal" key={item.title}>
-                <div className="why-us-icon"><Icon name={item.icon} size={28} /></div>
-                <div className="why-us-title">{item.title}</div>
-                <p className="why-us-text">{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> Our Stack</div>
-            <h2 className="section-heading">Technologies We <span className="gold-text">Master</span></h2>
-          </div>
-          <div className="chips-wrap">
+          <ul className="chips">
             {TECH_CHIPS.map((chip) => (
-              <div className="chip reveal" key={chip}>{chip}</div>
+              <li className="chip reveal" key={chip}>
+                {chip}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <div className="cta-banner" style={{ margin: '0 80px 80px' }}>
-        <div className="blob" style={{ width: 500, height: 300, background: 'rgba(201,168,76,0.08)', top: -80, left: '50%', transform: 'translateX(-50%)', zIndex: 0 }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div className="tag" style={{ margin: '0 auto 20px' }}><span className="tag-dot" /> Get Started</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem,3.5vw,3rem)', marginBottom: 30 }}>
-            Ready to Deploy <span className="gold-text">Intelligence?</span>
+      <section className="section section--ink">
+        <div className="container cta">
+          <div className="eyebrow">Get Started</div>
+          <h2 className="cta__title">
+            Ready to Deploy <Hl>Intelligence?</Hl>
           </h2>
-          <button className="btn-gold" onClick={() => go('/contact')}>
+          <button className="btn btn-primary" onClick={() => go('/contact')}>
             Book a Discovery Call <Icon name="arrowRight" size={16} />
           </button>
         </div>
-      </div>
+      </section>
 
       <Footer />
     </div>

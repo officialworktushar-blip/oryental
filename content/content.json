@@ -1,0 +1,996 @@
+{
+  "audit_metadata": {
+    "project": "Oryntal — AI & Web Agency",
+    "live_site": "https://oryntal.agency.org.in",
+    "source_root": "C:\\Users\\off1c\\Business-Projects\\Oryntal",
+    "date": "2026-10-16",
+    "extraction_note": "All strings copied verbatim from source files. No rewriting. Missing items are marked NOT FOUND.",
+    "files_audited": [
+      "index.html",
+      "src/App.jsx",
+      "src/main.jsx",
+      "src/components/Navbar.jsx",
+      "src/components/Footer.jsx",
+      "src/components/ReviewForm.jsx",
+      "src/components/Icon.jsx",
+      "src/components/CustomCursor.jsx",
+      "src/pages/Home.jsx",
+      "src/pages/About.jsx",
+      "src/pages/Services.jsx",
+      "src/pages/Contact.jsx",
+      "src/pages/Reviews.jsx",
+      "src/lib/supabase.js",
+      "src/hooks/useScrollReveal.js",
+      "server/index.js",
+      "api/contact.js"
+    ]
+  },
+
+  "meta_tags": {
+    "title": "Oryntal — AI & Web Agency",
+    "description": "Oryntal — AI & Web Agency. We build intelligence that scales. Premium AI engineering meets world-class design.",
+    "lang": "en",
+    "charset": "UTF-8",
+    "viewport": "width=device-width, initial-scale=1.0",
+    "favicon_href": "/oryntal-logo.png?v=2",
+    "shortcut_icon_href": "/oryntal-logo.png?v=2",
+    "fonts_preconnect": [
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com"
+    ],
+    "font_stylesheet": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap",
+    "og_title": "NOT FOUND",
+    "og_description": "NOT FOUND",
+    "og_image": "NOT FOUND",
+    "og_url": "NOT FOUND",
+    "twitter_card": "NOT FOUND",
+    "canonical": "NOT FOUND",
+    "robots_meta": "NOT FOUND",
+    "theme_color": "NOT FOUND",
+    "json_ld_structured_data": "NOT FOUND",
+    "apple_touch_icon": "NOT FOUND",
+    "highlight_candidates": [
+      "Oryntal — AI & Web Agency. We build intelligence that scales. Premium AI engineering meets world-class design.",
+      "Oryntal — AI & Web Agency",
+      "Oryntal"
+    ]
+  },
+
+  "sections": {
+
+    "navigation": {
+      "source": "src/components/Navbar.jsx",
+      "brand_text": "ORYNTAL",
+      "brand_html": "ORY<span class=\"nav-brand-n\">N</span>TAL",
+      "brand_logo_alt": "Oryntal Logo",
+      "desktop_links": [
+        { "label": "Home", "href": "/", "type": "internal" },
+        { "label": "About", "href": "/about", "type": "internal" },
+        { "label": "Services", "href": "/services", "type": "internal" },
+        { "label": "Portfolio", "href": "https://oryntal-portfolio-showcase.vercel.app/", "type": "external", "target": "_blank" },
+        { "label": "Contact Us", "href": "/contact", "type": "internal", "class": "nav-cta" }
+      ],
+      "mobile_menu_items": [
+        { "label": "Home", "href": "/" },
+        { "label": "About", "href": "/about" },
+        { "label": "Services", "href": "/services" },
+        { "label": "Portfolio", "href": "https://oryntal-portfolio-showcase.vercel.app/", "type": "external" },
+        { "label": "Contact Us", "href": "/contact", "class": "mobile-cta" }
+      ],
+      "burger_aria_label": "Toggle menu",
+      "not_linked_anywhere": ["/reviews"],
+      "highlight_candidates": [
+        "Contact Us",
+        "Portfolio",
+        "Services"
+      ]
+    },
+
+    "home_hero": {
+      "source": "src/pages/Home.jsx",
+      "logo_alt": "Oryntal Logo",
+      "meta_tag_label_class": "tag hero-meta-tag",
+      "meta_tags": ["EST 2024", "AI/Web Agency", "GST Registered"],
+      "wordmark": "ORYNTAL",
+      "wordmark_html": "ORY<span class=\"hero-wordmark-n\">N</span>TAL",
+      "h1": "We Build Intelligence That Scales",
+      "h1_html": "We Build <span class=\"gold-text\">Intelligence</span> That Scales",
+      "paragraph": "Oryntal fuses frontier AI engineering with world-class design to deliver outcomes that matter - faster, smarter, and built for the long game.",
+      "buttons": [
+        { "label": "Explore Services", "action": "navigate:/services" },
+        { "label": "Check Portfolio", "action": "link:https://oryntal-portfolio-showcase.vercel.app/" }
+      ],
+      "micro_stats_pills": ["AI Systems", "Brand Design", "Growth Outcomes"],
+      "scroll_hint": "Scroll",
+      "highlight_candidates": [
+        "We Build Intelligence That Scales",
+        "Oryntal fuses frontier AI engineering with world-class design to deliver outcomes that matter - faster, smarter, and built for the long game.",
+        "EST 2024 | AI/Web Agency | GST Registered"
+      ]
+    },
+
+    "home_stats_strip": {
+      "source": "src/pages/Home.jsx",
+      "stats": [
+        { "number": "417+", "label": "Projects Delivered" },
+        { "number": "98%", "label": "Client Satisfaction" },
+        { "number": "12+", "label": "Industries Served" },
+        { "number": "24/7", "label": "Support Availability" }
+      ],
+      "highlight_candidates": [
+        "417+ Projects Delivered",
+        "98% Client Satisfaction",
+        "24/7 Support Availability"
+      ]
+    },
+
+    "home_marquee": {
+      "source": "src/pages/Home.jsx",
+      "items": [
+        "AI LLM Models",
+        "NLP Pipelines",
+        "Web Design",
+        "Neural Architectures",
+        "Chatbot and AI Agents",
+        "App Design"
+      ],
+      "separator": "•",
+      "highlight_candidates": [
+        "AI LLM Models",
+        "Chatbot and AI Agents",
+        "Neural Architectures"
+      ]
+    },
+
+    "home_client_reviews": {
+      "source": "src/pages/Home.jsx",
+      "tag": "Client Reviews",
+      "heading": "What Our Clients Say",
+      "heading_html": "What Our <span class=\"gold-text\">Clients</span> Say",
+      "cta_button": "Write a Review",
+      "empty_state": "No reviews yet. Be the first to share your experience!",
+      "data_source": "Supabase table `reviews` (limit 6, ordered by created_at desc)",
+      "card_rendering": "star rating (1-5) + “{review}” + reviewer name linked to linkedin/profile_url",
+      "highlight_candidates": [
+        "What Our Clients Say",
+        "No reviews yet. Be the first to share your experience!",
+        "Client Reviews"
+      ]
+    },
+
+    "home_why_us": {
+      "source": "src/pages/Home.jsx",
+      "tag": "Why Us",
+      "heading": "The Oryntal Difference",
+      "heading_html": "The Oryntal <span class=\"gold-text\">Difference</span>",
+      "paragraph_1": "We do not just build products - we engineer outcomes. Every engagement is driven by measurable results, AI-first thinking, and a relentless pursuit of excellence.",
+      "paragraph_2": "Our founders come from the intersection of deep tech and business strategy, giving Oryntal a perspective that most agencies simply cannot replicate.",
+      "cta_button": "Our Story",
+      "cards": [
+        {
+          "icon": "brain",
+          "title": "AI-First Thinking",
+          "text": "Every project starts with the question: how can intelligence amplify this? We embed AI at the core, not as an afterthought."
+        },
+        {
+          "icon": "zap",
+          "title": "Speed Without Sacrifice",
+          "text": "AI-enhanced workflows cut timelines by up to 60%. We move fast without compromising the precision your project demands."
+        },
+        {
+          "icon": "target",
+          "title": "Outcome-Obsessed",
+          "text": "Built for conversion, retention, and measurable growth. If it doesn't move the needle, we don't build it."
+        },
+        {
+          "icon": "globe",
+          "title": "Global Reach, Human Touch",
+          "text": "Internationally-minded team with deeply personal client relationships. We speak the language of global business."
+        }
+      ],
+      "highlight_candidates": [
+        "The Oryntal Difference",
+        "We do not just build products - we engineer outcomes.",
+        "AI-enhanced workflows cut timelines by up to 60%."
+      ]
+    },
+
+    "home_services_preview": {
+      "source": "src/pages/Home.jsx",
+      "tag": "What We Do",
+      "heading": "Our Core Services",
+      "heading_html": "Our Core <span class=\"gold-text\">Services</span>",
+      "subheading": "From frontier AI models to pixel-perfect interfaces - we build the full stack of digital intelligence.",
+      "cta_button": "View All Services",
+      "services": [
+        {
+          "num": "01",
+          "icon": "bot",
+          "title": "AI & LLM Engineering",
+          "text": "Custom large language models, NLP pipelines, and neural architectures engineered for your domain."
+        },
+        {
+          "num": "02",
+          "icon": "messageSquare",
+          "title": "Chatbots & AI Agents",
+          "text": "Autonomous agents handling support, sales, and ops 24/7 so your team can focus on what matters most."
+        },
+        {
+          "num": "03",
+          "icon": "palette",
+          "title": "Website & App Design",
+          "text": "Award-worthy UI/UX for web and mobile across Android and iOS, conversion-focused and beautifully crafted."
+        }
+      ],
+      "highlight_candidates": [
+        "Our Core Services",
+        "From frontier AI models to pixel-perfect interfaces - we build the full stack of digital intelligence.",
+        "AI & LLM Engineering"
+      ]
+    },
+
+    "home_cta_banner": {
+      "source": "src/pages/Home.jsx",
+      "tag": "Ready to Transform?",
+      "title": "Your Competitors Are Already Using AI. Are You?",
+      "title_html": "Your Competitors Are Already<br /><span class=\"gold-text\">Using AI. Are You?</span>",
+      "cta_button": "Start Your Project",
+      "highlight_candidates": [
+        "Your Competitors Are Already Using AI. Are You?",
+        "Start Your Project",
+        "Ready to Transform?"
+      ]
+    },
+
+    "about_hero": {
+      "source": "src/pages/About.jsx",
+      "tag": "Our Story",
+      "h1": "Built to Solve Real Problems",
+      "h1_html": "Built to <span class=\"gold-text\">Solve</span> Real Problems",
+      "paragraph": "The story of Oryntal is the story of founders who saw an industry broken by mediocrity and decided to build something better.",
+      "pills": ["AI-led strategy", "Design discipline", "Measurable outcomes"],
+      "orbit_chips": ["Strategy", "Design", "Delivery"],
+      "logo_alt": "Oryntal Logo",
+      "highlight_candidates": [
+        "Built to Solve Real Problems",
+        "The story of Oryntal is the story of founders who saw an industry broken by mediocrity and decided to build something better.",
+        "AI-led strategy | Design discipline | Measurable outcomes"
+      ]
+    },
+
+    "about_origin_story": {
+      "source": "src/pages/About.jsx",
+      "tag": "Origin",
+      "heading": "Where We Came From",
+      "heading_html": "Where We <span class=\"gold-text\">Came From</span>",
+      "paragraph_1": "We saw agencies giving clients slow timelines, generic outputs, and zero AI integration. The market was flooded with studios that could design but not engineer, and engineers who could not communicate.",
+      "paragraph_2": "Oryntal was built as the bridge - a fusion of frontier AI engineering and world-class creative design, unified under one roof with a single obsession: outcomes.",
+      "quote": "Technology should serve human ambition, not replace it.",
+      "highlight_candidates": [
+        "Oryntal was built as the bridge - a fusion of frontier AI engineering and world-class creative design, unified under one roof with a single obsession: outcomes.",
+        "Technology should serve human ambition, not replace it.",
+        "We saw agencies giving clients slow timelines, generic outputs, and zero AI integration."
+      ]
+    },
+
+    "about_timeline": {
+      "source": "src/pages/About.jsx",
+      "items": [
+        { "year": "2023", "title": "The Insight", "text": "The founders witnessed a broken industry: slow timelines, generic outputs, and zero AI." },
+        { "year": "Early 2024", "title": "Building Foundation", "text": "A team was assembled at the intersection of deep tech, business strategy, and design craft." },
+        { "year": "2024", "title": "Oryntal Launches", "text": "The first clients saw AI-powered results in record time. The blueprint was proven." },
+        { "year": "2025", "title": "Global Expansion", "text": "Oryntal began serving clients across 12+ industries worldwide with a remote-first model." }
+      ],
+      "highlight_candidates": [
+        "Oryntal began serving clients across 12+ industries worldwide with a remote-first model.",
+        "The first clients saw AI-powered results in record time. The blueprint was proven.",
+        "Oryntal Launches"
+      ]
+    },
+
+    "about_pain_points": {
+      "source": "src/pages/About.jsx",
+      "tag": "Problems We Exist to Fix",
+      "items": [
+        { "icon": "snail", "title": "Agencies Are Painfully Slow", "text": "Six-month timelines for a website? We cut that to weeks without sacrificing quality." },
+        { "icon": "heartCrack", "title": "Beautiful But Broken", "text": "Stunning designs that do not convert. We build for results, not just aesthetics." },
+        { "icon": "brain", "title": "AI Is Confusing and Overhyped", "text": "We translate hype into real, deployable systems that solve actual business problems." },
+        { "icon": "badgeDollar", "title": "Paying for Fluff, Not Results", "text": "Retainers with no accountability. We tie our success directly to your outcomes." },
+        { "icon": "bridge", "title": "Siloed Expertise", "text": "AI teams that cannot design. Design teams that cannot code. We are the bridge." },
+        { "icon": "ghost", "title": "Agencies Disappear After Launch", "text": "We stay, optimize, and evolve your product long after the first deployment." }
+      ],
+      "highlight_candidates": [
+        "Six-month timelines for a website? We cut that to weeks without sacrificing quality.",
+        "We translate hype into real, deployable systems that solve actual business problems.",
+        "We stay, optimize, and evolve your product long after the first deployment."
+      ]
+    },
+
+    "about_founders": {
+      "source": "src/pages/About.jsx",
+      "tag": "Leadership",
+      "heading": "Meet the Founders",
+      "heading_html": "Meet the <span class=\"gold-text\">Founders</span>",
+      "founders": [
+        {
+          "initials": "TS",
+          "name": "Tushar Srivastav",
+          "role": "Founder and CEO",
+          "linkedin": "https://www.linkedin.com/in/tushar-shrivastav-710268350/",
+          "bullets": [
+            "Visionary architect of Oryntal's AI-first philosophy",
+            "Drives strategic partnerships and investor relations",
+            "10+ years of entrepreneurship across tech and business",
+            "Oversees flagship projects from concept to delivery"
+          ]
+        },
+        {
+          "initials": "DM",
+          "name": "Dipesh Mayla",
+          "role": "Co-Founder and CFO",
+          "linkedin": "https://www.linkedin.com/in/dipesh-mayla-85aa44325/",
+          "bullets": [
+            "Financial architect behind revenue and pricing strategy",
+            "Expert in resource allocation and financial forecasting",
+            "Ensures every client investment delivers measurable ROI",
+            "Built the operational financial framework from the ground up"
+          ]
+        },
+        {
+          "initials": "PS",
+          "name": "Parth Srivastav",
+          "role": "CMO",
+          "linkedin": "https://www.linkedin.com/in/parth-srivastava-bloomingsparrow/",
+          "bullets": [
+            "Brand and content strategy",
+            "Turns AI products into market stories",
+            "Demand generation",
+            "B2B tech positioning"
+          ]
+        }
+      ],
+      "highlight_candidates": [
+        "10+ years of entrepreneurship across tech and business",
+        "Ensures every client investment delivers measurable ROI",
+        "Turns AI products into market stories"
+      ]
+    },
+
+    "about_values": {
+      "source": "src/pages/About.jsx",
+      "tag": "What We Stand For",
+      "heading": "Our Core Values",
+      "heading_html": "Our Core <span class=\"gold-text\">Values</span>",
+      "items": [
+        { "icon": "zap", "title": "Precision Over Speed", "text": "Fast, but never at the expense of craft. We refuse to ship work we are not proud of." },
+        { "icon": "handshake", "title": "Partnership, Not Vendor", "text": "Your KPIs are our North Star. We succeed only when you succeed." },
+        { "icon": "flask", "title": "Always at the Frontier", "text": "We work with the latest AI capabilities on day one, not when they are already mainstream." },
+        { "icon": "search", "title": "Radical Transparency", "text": "No smoke and no mirrors. Clear communication at every stage of your project." },
+        { "icon": "gem", "title": "Quality as Standard", "text": "Good enough is not in our vocabulary. Excellence is the baseline." },
+        { "icon": "globe", "title": "Global Mindset", "text": "Built for scale across markets, languages, and cultures." }
+      ],
+      "highlight_candidates": [
+        "Your KPIs are our North Star. We succeed only when you succeed.",
+        "Good enough is not in our vocabulary. Excellence is the baseline.",
+        "Always at the Frontier"
+      ]
+    },
+
+    "about_cta_banner": {
+      "source": "src/pages/About.jsx",
+      "tag": "Ready?",
+      "title": "Let's Build Something Extraordinary",
+      "cta_button": "Start Your Project",
+      "highlight_candidates": [
+        "Let's Build Something Extraordinary",
+        "Start Your Project",
+        "Ready?"
+      ]
+    },
+
+    "services_hero": {
+      "source": "src/pages/Services.jsx",
+      "tag": "What We Do",
+      "h1": "Intelligence Engineered to Deliver",
+      "h1_html": "Intelligence <span class=\"gold-text\">Engineered</span> to Deliver",
+      "paragraph": "Six specialized service lines, each built to transform how your business competes in an AI-first world.",
+      "pills": ["AI strategy", "Product design", "Production launch"],
+      "visual_panel_copy": "Full-stack intelligence",
+      "visual_cards": ["AI systems", "Secure delivery", "Growth outcomes"],
+      "logo_alt": "Oryntal Logo",
+      "highlight_candidates": [
+        "Intelligence Engineered to Deliver",
+        "Six specialized service lines, each built to transform how your business competes in an AI-first world.",
+        "AI strategy | Product design | Production launch"
+      ]
+    },
+
+    "services_service_lines": {
+      "source": "src/pages/Services.jsx",
+      "detail_cta_button": "Start This Project",
+      "services": [
+        {
+          "num": "01",
+          "tag": "AI Vertical",
+          "title": "Custom LLM Models",
+          "desc": "We build domain-specific large language models fine-tuned on your proprietary data, running privately, securely, and improving continuously with usage.",
+          "features": [
+            { "icon": "shield", "text": "Private, secure deployments on-prem or in the cloud" },
+            { "icon": "chart", "text": "Models that improve continuously with usage data" },
+            { "icon": "languages", "text": "Multilingual capabilities for cross-market deployment" },
+            { "icon": "target", "text": "Domain-specific fine-tuning on your proprietary data" }
+          ]
+        },
+        {
+          "num": "02",
+          "tag": "AI Vertical",
+          "title": "NLP Pipelines",
+          "desc": "Enterprise-scale natural language processing pipelines from automated document extraction to real-time sentiment analysis and entity recognition.",
+          "features": [
+            { "icon": "fileText", "text": "Automated document processing and data extraction" },
+            { "icon": "brain", "text": "Sentiment analysis, entity recognition, and topic modeling" },
+            { "icon": "zap", "text": "Real-time processing at enterprise scale" },
+            { "icon": "network", "text": "Seamless integration with your existing data stack" }
+          ]
+        },
+        {
+          "num": "03",
+          "tag": "AI Vertical",
+          "title": "Neural AI Architectures",
+          "desc": "Custom neural network architectures designed for computer vision, predictive analytics, recommendation systems, and anomaly detection at production scale.",
+          "features": [
+            { "icon": "eye", "text": "Computer vision and image recognition systems" },
+            { "icon": "target", "text": "Recommendation engines and ranking systems" },
+            { "icon": "search", "text": "Anomaly detection and predictive analytics" },
+            { "icon": "rocket", "text": "Production-optimized with low-latency inference" }
+          ]
+        },
+        {
+          "num": "04",
+          "tag": "AI Vertical",
+          "title": "Chatbots and AI Agents",
+          "desc": "Autonomous conversational agents equipped with memory, context, and deep integrations, handling support, sales, and ops 24/7 without interruption.",
+          "features": [
+            { "icon": "messageSquare", "text": "Multi-turn AI with persistent memory and context" },
+            { "icon": "network", "text": "Deep integration with CRM, helpdesk, and databases" },
+            { "icon": "phone", "text": "Voice-capable agents for phone and IVR systems" },
+            { "icon": "bot", "text": "Autonomous task execution and workflow automation" }
+          ]
+        },
+        {
+          "num": "05",
+          "tag": "Design Vertical",
+          "title": "Website Design",
+          "desc": "Award-worthy web experiences built for conversion. Bespoke UI/UX, pixel-perfect responsiveness, and performance-optimized code built to score high on Core Web Vitals.",
+          "features": [
+            { "icon": "sparkles", "text": "Bespoke UI and UX tailored to your brand identity" },
+            { "icon": "phone", "text": "Fully responsive across all devices and screen sizes" },
+            { "icon": "rocket", "text": "Performance-minded builds with Core Web Vitals in focus" },
+            { "icon": "barChart", "text": "Conversion-focused layouts backed by UX research" }
+          ]
+        },
+        {
+          "num": "06",
+          "tag": "Design Vertical",
+          "title": "App Design for iOS and Android",
+          "desc": "Native-quality mobile experiences following Apple HIG and Material Design 3, with interactive prototypes, user testing, and a relentless focus on engagement.",
+          "features": [
+            { "icon": "apple", "text": "iOS interfaces aligned with Human Interface Guidelines" },
+            { "icon": "bot", "text": "Material Design 3 thinking for Android excellence" },
+            { "icon": "palette", "text": "Interactive prototypes before development starts" },
+            { "icon": "flask", "text": "UX research, user testing, and conversion optimization" }
+          ]
+        }
+      ],
+      "highlight_candidates": [
+        "Custom LLM Models — We build domain-specific large language models fine-tuned on your proprietary data, running privately, securely, and improving continuously with usage.",
+        "Award-worthy web experiences built for conversion.",
+        "Autonomous conversational agents equipped with memory, context, and deep integrations, handling support, sales, and ops 24/7 without interruption."
+      ]
+    },
+
+    "services_process": {
+      "source": "src/pages/Services.jsx",
+      "tag": "How We Work",
+      "heading": "Our Process",
+      "heading_html": "Our <span class=\"gold-text\">Process</span>",
+      "steps": [
+        { "num": "01", "title": "Discovery", "text": "Deep dive into your goals, market landscape, and technical environment." },
+        { "num": "02", "title": "Strategy", "text": "Architecture design and outcome roadmap with clear, measurable milestones." },
+        { "num": "03", "title": "Build", "text": "Agile development sprints with weekly client touchpoints and full transparency." },
+        { "num": "04", "title": "Launch", "text": "Rigorous QA, performance testing, and seamless production deployment." },
+        { "num": "05", "title": "Scale", "text": "Ongoing optimization, monitoring, and long-term growth partnership." }
+      ],
+      "highlight_candidates": [
+        "Architecture design and outcome roadmap with clear, measurable milestones.",
+        "Agile development sprints with weekly client touchpoints and full transparency.",
+        "Ongoing optimization, monitoring, and long-term growth partnership."
+      ]
+    },
+
+    "services_why_us": {
+      "source": "src/pages/Services.jsx",
+      "tag": "Why Choose Us",
+      "heading": "The Oryntal Advantage",
+      "heading_html": "The Oryntal <span class=\"gold-text\">Advantage</span>",
+      "items": [
+        { "icon": "zap", "title": "AI-Accelerated Delivery", "text": "60% faster delivery using AI-enhanced development workflows." },
+        { "icon": "shield", "title": "Enterprise Security", "text": "SOC2-aligned practices, private deployments, and complete data privacy." },
+        { "icon": "chart", "title": "Outcome-Focused", "text": "Every project is measured against real business metrics, not vanity metrics." },
+        { "icon": "globe", "title": "Global Experience", "text": "Deployed across 12+ industries in diverse international markets." }
+      ],
+      "highlight_candidates": [
+        "60% faster delivery using AI-enhanced development workflows.",
+        "SOC2-aligned practices, private deployments, and complete data privacy.",
+        "Every project is measured against real business metrics, not vanity metrics."
+      ]
+    },
+
+    "services_technologies": {
+      "source": "src/pages/Services.jsx",
+      "tag": "Our Stack",
+      "heading": "Technologies We Master",
+      "heading_html": "Technologies We <span class=\"gold-text\">Master</span>",
+      "chips": [
+        "GPT-4 / Claude",
+        "LangChain",
+        "LlamaIndex",
+        "PyTorch",
+        "TensorFlow",
+        "HuggingFace",
+        "FastAPI",
+        "React / Next.js",
+        "Flutter",
+        "React Native",
+        "Figma",
+        "AWS / GCP",
+        "Docker / K8s",
+        "Pinecone",
+        "Weaviate",
+        "OpenAI API",
+        "RAG Systems",
+        "Vector DBs"
+      ],
+      "highlight_candidates": [
+        "Technologies We Master",
+        "GPT-4 / Claude",
+        "OpenAI API"
+      ]
+    },
+
+    "services_cta_banner": {
+      "source": "src/pages/Services.jsx",
+      "tag": "Get Started",
+      "title": "Ready to Deploy Intelligence?",
+      "cta_button": "Book a Discovery Call",
+      "highlight_candidates": [
+        "Ready to Deploy Intelligence?",
+        "Book a Discovery Call",
+        "Get Started"
+      ]
+    },
+
+    "contact_slideshow": {
+      "source": "src/pages/Contact.jsx",
+      "slides": [
+        {
+          "tag": "Work With Us",
+          "title": "Transform Your Business with Intelligent AI",
+          "body": "Stop watching competitors pull ahead. Oryntal deploys AI that generates real, quantifiable returns instead of proofs of concept.",
+          "points": ["AI strategy mapping", "Automation-led growth", "Measurable deployment wins"],
+          "buttons": ["Get in Touch", "View Services"]
+        },
+        {
+          "tag": "Design Excellence",
+          "title": "Websites and Apps That Convert and Captivate",
+          "body": "First impressions are permanent. We craft digital experiences so sophisticated they become a competitive moat for your brand.",
+          "points": ["Premium interface systems", "Conversion-focused journeys", "Responsive product polish"],
+          "buttons": ["Get in Touch", "View Services"]
+        },
+        {
+          "tag": "Your Growth Partner",
+          "title": "More Than an Agency, a Strategic Partner",
+          "body": "We do not disappear after launch. We stay, optimize, and scale with you as your business grows and the market evolves.",
+          "points": ["Long-term optimization", "Fast strategic support", "Scale-ready execution"],
+          "buttons": ["Get in Touch", "View Services"]
+        }
+      ],
+      "nav_aria_labels": ["Previous", "Next", "Slide 1", "Slide 2", "Slide 3"],
+      "highlight_candidates": [
+        "Oryntal deploys AI that generates real, quantifiable returns instead of proofs of concept.",
+        "We craft digital experiences so sophisticated they become a competitive moat for your brand.",
+        "We do not disappear after launch."
+      ]
+    },
+
+    "contact_form_section": {
+      "source": "src/pages/Contact.jsx",
+      "tag": "Let's Talk",
+      "heading": "Ready to Build Something Extraordinary?",
+      "heading_html": "Ready to Build Something <span class=\"gold-text\">Extraordinary?</span>",
+      "intro_copy": "Share a few details and we'll get back to you within 24 business hours.",
+      "form_tag": "Send a Message",
+      "form_destination": "Delivered to support.oryntal@agency.org.in",
+      "labels": [
+        { "field": "fname", "label": "First Name", "placeholder": "Rahul", "required": true },
+        { "field": "lname", "label": "Last Name", "placeholder": "Kapoor", "required": false },
+        { "field": "email", "label": "Email Address", "placeholder": "rahul@company.com", "required": true },
+        { "field": "company", "label": "Company / Organisation", "placeholder": "FinEdge Solutions", "required": false },
+        {
+          "field": "service",
+          "label": "Service Interested In",
+          "placeholder": "Select a service...",
+          "options": [
+            "AI LLM Models",
+            "NLP Pipelines",
+            "Neural AI Architectures",
+            "Chatbots and AI Agents",
+            "Website Design",
+            "App Design iOS and Android",
+            "Full Package"
+          ]
+        },
+        { "field": "message", "label": "Tell Us About Your Project", "placeholder": "Describe your project, goals, and timeline...", "required": true }
+      ],
+      "submit_button_idle": "Send Message",
+      "submit_button_sending": "Sending…",
+      "validation_error": "Please fill in your name, email, and message.",
+      "network_error_fallback": "Something went wrong. Please email us directly at support.oryntal@agency.org.in",
+      "success_title": "Message Sent!",
+      "success_body": "Thank you for reaching out. Your message has been delivered to support.oryntal@agency.org.in. We'll get back to you within 24 business hours.",
+      "success_button": "Send Another Message",
+      "endpoint": "POST /api/contact",
+      "highlight_candidates": [
+        "Ready to Build Something Extraordinary?",
+        "Share a few details and we'll get back to you within 24 business hours.",
+        "Delivered to support.oryntal@agency.org.in"
+      ]
+    },
+
+    "contact_info_cards": {
+      "source": "src/pages/Contact.jsx",
+      "items": [
+        { "icon": "mail", "label": "Email", "value": "support.oryntal@agency.org.in", "href": "mailto:support.oryntal@agency.org.in" },
+        { "icon": "mapPin", "label": "Location", "value": "India • Remote-First • Global Reach" },
+        { "icon": "clock", "label": "Response Time", "value": "Within 24 business hours" },
+        { "icon": "globe", "label": "Serving", "value": "Clients Worldwide • 12+ Industries" }
+      ],
+      "highlight_candidates": [
+        "India • Remote-First • Global Reach",
+        "Within 24 business hours",
+        "Clients Worldwide • 12+ Industries"
+      ]
+    },
+
+    "contact_collabs": {
+      "source": "src/pages/Contact.jsx",
+      "label": "Trusted and Collaborated With",
+      "pills": [
+        "TechVentures IN",
+        "NeuralBridge Labs",
+        "ScaleUp Studio",
+        "FutureMark Digital",
+        "ArcLight AI",
+        "GrowthStack"
+      ],
+      "highlight_candidates": [
+        "Trusted and Collaborated With",
+        "TechVentures IN",
+        "NeuralBridge Labs"
+      ]
+    },
+
+    "contact_testimonials": {
+      "source": "src/pages/Contact.jsx",
+      "tag": "Client Results",
+      "heading": "What Our Clients Say",
+      "heading_html": "What Our <span class=\"gold-text\">Clients Say</span>",
+      "items": [
+        {
+          "stars": 5,
+          "name": "Killian",
+          "org": "California, USA",
+          "initials": "K",
+          "type": "video",
+          "media_label": "Client Video Testimonial",
+          "flag": "🇺🇸",
+          "src": "/testimonials/killian-review.mp4",
+          "quote": "Killian shares his experience working with Oryntal in this client video testimonial."
+        },
+        {
+          "stars": 5,
+          "name": "Xing Ming",
+          "org": "China",
+          "initials": "XM",
+          "type": "video",
+          "media_label": "Client Video Testimonial",
+          "flag": "🇨🇳",
+          "src": "/testimonials/xing-ming-review.mp4",
+          "quote": "Xing Ming speaks about the value, experience, and delivery quality in this short review."
+        },
+        {
+          "stars": 5,
+          "name": "Xing Ming",
+          "org": "China",
+          "initials": "XM",
+          "type": "audio",
+          "media_label": "Client Audio Testimonial",
+          "flag": "🇨🇳",
+          "src": "/testimonials/xing-ming-review.mp4",
+          "quote": "Hear Xing Ming’s audio testimonial on the speed, clarity, and quality of the project."
+        },
+        {
+          "stars": 5,
+          "quote": "Their AI chatbot handles 80% of our support queries automatically. The ROI was visible within the first month.",
+          "name": "Rahul Kapoor",
+          "org": "CEO, FinEdge Solutions",
+          "initials": "RK",
+          "type": "quote"
+        },
+        {
+          "stars": 5,
+          "quote": "Our website conversion rate tripled in just 60 days. Oryntal's design approach is in a different league.",
+          "name": "Sneha Mehta",
+          "org": "Founder, Verdant Health",
+          "initials": "SM",
+          "type": "quote"
+        },
+        {
+          "stars": 5,
+          "quote": "The NLP pipeline was live in 6 weeks and saves us over 40 hours per month in manual processing.",
+          "name": "Arjun Joshi",
+          "org": "CTO, DataPulse Analytics",
+          "initials": "AJ",
+          "type": "quote"
+        },
+        {
+          "stars": 5,
+          "quote": "Average app session time went from 2 minutes to 18 minutes after Oryntal redesigned the UX.",
+          "name": "Priya Desai",
+          "org": "Product Lead, Nuvia App",
+          "initials": "PD",
+          "type": "quote"
+        },
+        {
+          "stars": 5,
+          "quote": "They bring an ownership mindset: responsive, quality-focused, and genuinely invested in your success.",
+          "name": "Manish Singh",
+          "org": "Founder, BuildWise",
+          "initials": "MS",
+          "type": "quote"
+        },
+        {
+          "stars": 5,
+          "quote": "The LLM drafts 70% of our legal documents now. We achieved full ROI in the first month of deployment.",
+          "name": "Varun Nair",
+          "org": "Managing Partner, LexAI Firm",
+          "initials": "VN",
+          "type": "quote"
+        }
+      ],
+      "media_fallback_text": {
+        "video": "Your browser does not support the video tag.",
+        "audio": "Your browser does not support the audio element.",
+        "audio_caption": "Audio Playback"
+      },
+      "highlight_candidates": [
+        "Their AI chatbot handles 80% of our support queries automatically. The ROI was visible within the first month.",
+        "Our website conversion rate tripled in just 60 days. Oryntal's design approach is in a different league.",
+        "The LLM drafts 70% of our legal documents now. We achieved full ROI in the first month of deployment."
+      ]
+    },
+
+    "contact_free_resources": {
+      "source": "src/pages/Contact.jsx",
+      "tag": "Free Resources",
+      "heading": "Start With Zero Risk",
+      "heading_html": "Start With <span class=\"gold-text\">Zero Risk</span>",
+      "cards": [
+        { "icon": "phone", "title": "Free Discovery Call", "text": "30 minutes, no commitment. Walk away with a clear AI strategy for your business." },
+        { "icon": "search", "title": "Free Digital Audit", "text": "We review your digital presence and identify your biggest growth opportunities." },
+        { "icon": "barChart", "title": "AI Feasibility Report", "text": "Map out exactly what is possible with AI and what it will cost for your use case." },
+        { "icon": "handshake", "title": "Partnership Program", "text": "Agencies can join the Oryntal Partner Network and deliver AI at scale." }
+      ],
+      "card_link": "Learn more",
+      "highlight_candidates": [
+        "Free Discovery Call — 30 minutes, no commitment.",
+        "Free Digital Audit",
+        "Start With Zero Risk"
+      ]
+    },
+
+    "reviews_page": {
+      "source": "src/pages/Reviews.jsx",
+      "route": "/reviews",
+      "tag": "Testimonials",
+      "h1": "What Our Clients Say",
+      "h1_html": "What Our <span class=\"gold-text\">Clients</span> Say",
+      "subheading": "Real experiences from real people. Every review is linked to the reviewer's social profile for full transparency.",
+      "hero_cta": "Write a Review",
+      "section_tag": "All Reviews",
+      "section_heading": "Verified Client Feedback",
+      "section_heading_html": "Verified <span class=\"gold-text\">Client</span> Feedback",
+      "loading_state": "Loading reviews...",
+      "empty_state": "No reviews yet. Be the first to share your experience!",
+      "date_format": "en-US, month short / day numeric / year numeric",
+      "highlight_candidates": [
+        "Real experiences from real people. Every review is linked to the reviewer's social profile for full transparency.",
+        "Verified Client Feedback",
+        "Write a Review"
+      ]
+    },
+
+    "review_form": {
+      "source": "src/components/ReviewForm.jsx",
+      "title": "Write a Review",
+      "fields": [
+        { "label": "Your Name", "placeholder": "John Doe" },
+        { "label": "LinkedIn or Instagram URL *", "placeholder": "https://www.linkedin.com/in/yourprofile/", "required": true },
+        { "label": "Your Review", "placeholder": "Share your experience working with Oryntal..." },
+        { "label": "Rating", "control": "1-5 star buttons" }
+      ],
+      "errors": {
+        "required": "All fields are required.",
+        "invalid_url": "Please enter a valid LinkedIn or Instagram profile URL.",
+        "not_configured": "Reviews are not configured yet.",
+        "submission_failed_prefix": "Submission failed: "
+      },
+      "submit_idle": "Submit Review",
+      "submit_loading": "Submitting...",
+      "success_title": "Thank you!",
+      "success_body": "Your review has been submitted successfully.",
+      "success_buttons": ["Write Another", "Close"],
+      "close_button_label": "✕",
+      "endpoints": [
+        "Supabase insert -> table `reviews` (name, linkedin, review, rating)",
+        "EmailJS email.send (best-effort) -> to_email: support.oryntal@agency.org.in, subject: New Review Submitted"
+      ],
+      "highlight_candidates": [
+        "Write a Review",
+        "Share your experience working with Oryntal...",
+        "Thank you!"
+      ]
+    },
+
+    "footer": {
+      "source": "src/components/Footer.jsx",
+      "brand_name": "ORYNTAL",
+      "brand_logo_alt": "Oryntal",
+      "tagline": "An AI & Web Agency engineering intelligence that scales. We build the future — one system at a time.",
+      "columns": [
+        {
+          "title": "Pages",
+          "links": [
+            { "label": "Home", "href": "/" },
+            { "label": "About Us", "href": "/about" },
+            { "label": "Services", "href": "/services" },
+            { "label": "Contact", "href": "/contact" }
+          ]
+        },
+        {
+          "title": "Services",
+          "links": [
+            { "label": "AI LLM Models", "href": "/services" },
+            { "label": "NLP Pipelines", "href": "/services" },
+            { "label": "Neural Architectures", "href": "/services" },
+            { "label": "Chatbots & Agents", "href": "/services" },
+            { "label": "Website Design", "href": "/services" },
+            { "label": "App Design", "href": "/services" }
+          ]
+        },
+        {
+          "title": "Contact",
+          "links": [
+            { "label": "support.oryntal@agency.org.in", "href": "mailto:support.oryntal@agency.org.in" },
+            { "label": "LinkedIn", "href": "https://www.linkedin.com/company/108076048/admin/dashboard/" },
+            { "label": "X (Twitter)", "href": "https://x.com/Sri_Tushar_01" },
+            { "label": "Instagram", "href": "https://www.instagram.com/oryntal_01?utm_source=qr&igsh=MW15c3VqN2VoazhzNQ==" },
+            { "label": "Refund Policy", "href": "https://docs.google.com/document/d/1EkEThAc5OUmN0eS3WBM1HFJiZJfidXcxklNNdysTdAQ/edit?usp=sharing" }
+          ]
+        }
+      ],
+      "copyright": "© 2025 Oryntal. All rights reserved. Crafted with Intelligence.",
+      "social_icons": [
+        { "title": "LinkedIn", "href": "https://www.linkedin.com/company/108076048/admin/dashboard/" },
+        { "title": "X", "href": "https://x.com/Sri_Tushar_01" },
+        { "title": "Instagram", "href": "https://www.instagram.com/oryntal_01?utm_source=qr&igsh=MW15c3VqN2VoazhzNQ==" }
+      ],
+      "highlight_candidates": [
+        "An AI & Web Agency engineering intelligence that scales. We build the future — one system at a time.",
+        "© 2025 Oryntal. All rights reserved. Crafted with Intelligence.",
+        "Refund Policy"
+      ]
+    },
+
+    "packages_pricing": {
+      "status": "NOT FOUND",
+      "names": "NOT FOUND",
+      "prices": "NOT FOUND",
+      "features": "NOT FOUND",
+      "billing_periods": "NOT FOUND",
+      "cta_labels": "NOT FOUND",
+      "search_performed": "Searched src/**, dist/**, index.html, public/** for: ₹, $<amount>, /mo, per month, pricing, Pricing, one-time, billing, Starter, Premium, Enterprise, Package",
+      "nearest_matches": [
+        "Contact.jsx select option: \"Full Package\"",
+        "About.jsx founder bullet: \"Financial architect behind revenue and pricing strategy\""
+      ],
+      "note": "The site has no pricing/packages section in any route (/, /about, /services, /contact, /reviews). No prices, billing periods, or package CTAs exist in source or in the built dist bundle.",
+      "highlight_candidates": []
+    }
+  },
+
+  "assets": {
+    "images": [
+      {
+        "source_path": "src/assets/oryntal-logo.png",
+        "imported_in": ["Navbar.jsx", "Footer.jsx", "Home.jsx", "About.jsx", "Services.jsx", "Contact.jsx"],
+        "built_path": "/assets/oryntal-logo-Cqs0Atb9.png",
+        "alt_texts": ["Oryntal Logo", "Oryntal (footer)"]
+      },
+      {
+        "source_path": "public/favicon.svg",
+        "referenced": false,
+        "status": "UNUSED - never referenced in code or index.html"
+      },
+      {
+        "source_path": "public/icons.svg",
+        "referenced": false,
+        "status": "UNUSED - Icon.jsx inlines SVG paths instead"
+      }
+    ],
+    "videos": [
+      {
+        "path": "/testimonials/killian-review.mp4",
+        "source_path": "public/testimonials/killian-review.mp4",
+        "size_bytes": 8612142,
+        "used_in": "Contact.jsx testimonial (type: video)",
+        "alt_or_captions": "NOT FOUND (no <track> captions, no aria description)"
+      },
+      {
+        "path": "/testimonials/xing-ming-review.mp4",
+        "source_path": "public/testimonials/xing-ming-review.mp4",
+        "size_bytes": 377636,
+        "used_in": "Contact.jsx testimonial (type: video) and testimonial (type: audio, same file)",
+        "alt_or_captions": "NOT FOUND (no <track> captions, no aria description)"
+      }
+    ],
+    "favicon_referenced": {
+      "href": "/oryntal-logo.png?v=2",
+      "exists_in_public": false,
+      "exists_in_dist": false,
+      "status": "BROKEN - 404"
+    },
+    "highlight_candidates": [
+      "/assets/oryntal-logo-Cqs0Atb9.png",
+      "/testimonials/killian-review.mp4",
+      "/testimonials/xing-ming-review.mp4"
+    ]
+  },
+
+  "contact_details": {
+    "email": "support.oryntal@agency.org.in",
+    "location": "India • Remote-First • Global Reach",
+    "response_time": "Within 24 business hours",
+    "serving": "Clients Worldwide • 12+ Industries",
+    "phone": "NOT FOUND",
+    "postal_address": "NOT FOUND",
+    "physical_office": "NOT FOUND",
+    "social_links": {
+      "linkedin": "https://www.linkedin.com/company/108076048/admin/dashboard/",
+      "instagram": "https://www.instagram.com/oryntal_01?utm_source=qr&igsh=MW15c3VqN2VoazhzNQ==",
+      "twitter_x": "https://x.com/Sri_Tushar_01",
+      "portfolio": "https://oryntal-portfolio-showcase.vercel.app/",
+      "refund_policy": "https://docs.google.com/document/d/1EkEThAc5OUmN0eS3WBM1HFJiZJfidXcxklNNdysTdAQ/edit?usp=sharing"
+    },
+    "founder_links": {
+      "tushar_srivastav": "https://www.linkedin.com/in/tushar-shrivastav-710268350/",
+      "dipesh_mayla": "https://www.linkedin.com/in/dipesh-mayla-85aa44325/",
+      "parth_srivastav": "https://www.linkedin.com/in/parth-srivastava-bloomingsparrow/"
+    },
+    "highlight_candidates": [
+      "support.oryntal@agency.org.in",
+      "Within 24 business hours",
+      "India • Remote-First • Global Reach"
+    ]
+  }
+}

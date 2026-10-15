@@ -4,10 +4,28 @@ import Icon from './Icon'
 import './Footer.css'
 
 const SOCIAL_LINKS = {
-  linkedin: 'https://www.linkedin.com/company/108076048/admin/dashboard/',
+  // TODO: owner to confirm the public LinkedIn URL
+  linkedin: 'https://www.linkedin.com/company/108076048/',
   instagram: 'https://www.instagram.com/oryntal_01?utm_source=qr&igsh=MW15c3VqN2VoazhzNQ==',
   twitter: 'https://x.com/Sri_Tushar_01',
 }
+
+const PAGES = [
+  { label: 'Home', to: '/' },
+  { label: 'About Us', to: '/about' },
+  { label: 'Services', to: '/services' },
+  { label: 'Reviews', to: '/reviews' },
+  { label: 'Contact', to: '/contact' },
+]
+
+const SERVICES = [
+  'AI LLM Models',
+  'NLP Pipelines',
+  'Neural Architectures',
+  'Chatbots & Agents',
+  'Website Design',
+  'App Design',
+]
 
 export default function Footer() {
   const navigate = useNavigate()
@@ -19,66 +37,91 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <div className="footer-inner container">
-        <div className="footer-grid">
-          {/* Brand */}
-          <div className="footer-col footer-brand-col">
-            <div className="footer-brand">
-              <img src={logo} alt="Oryntal" className="footer-logo logo-3d" />
-              <span className="footer-brand-name">ORY<span className="footer-brand-n">N</span>TAL</span>
+      <div className="container">
+        <div className="footer__grid">
+          <div className="footer__brand-col">
+            <div className="footer__brand">
+              <img src={logo} alt="Oryntal" className="footer__logo" width="32" height="32" />
+              <span className="footer__brand-name">
+                ORY<span className="footer__brand-n">N</span>TAL
+              </span>
             </div>
-            <p className="footer-tagline">
-              An AI &amp; Web Agency engineering intelligence that scales.
-              We build the future &mdash; one system at a time.
+            <p className="footer__tagline">
+              An AI &amp; Web Agency engineering intelligence that scales. We build the future &mdash; one system at a
+              time.
             </p>
           </div>
 
-          {/* Pages */}
-          <div className="footer-col">
-            <div className="footer-col-title">Pages</div>
-            <ul className="footer-links">
-              <li><button onClick={() => go('/')}>Home</button></li>
-              <li><button onClick={() => go('/about')}>About Us</button></li>
-              <li><button onClick={() => go('/services')}>Services</button></li>
-              <li><button onClick={() => go('/contact')}>Contact</button></li>
+          <nav className="footer__col" aria-label="Pages">
+            <h2 className="footer__col-title">Pages</h2>
+            <ul className="footer__links">
+              {PAGES.map((page) => (
+                <li key={page.to}>
+                  <button onClick={() => go(page.to)}>{page.label}</button>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Services */}
-          <div className="footer-col">
-            <div className="footer-col-title">Services</div>
-            <ul className="footer-links">
-              <li><button onClick={() => go('/services')}>AI LLM Models</button></li>
-              <li><button onClick={() => go('/services')}>NLP Pipelines</button></li>
-              <li><button onClick={() => go('/services')}>Neural Architectures</button></li>
-              <li><button onClick={() => go('/services')}>Chatbots &amp; Agents</button></li>
-              <li><button onClick={() => go('/services')}>Website Design</button></li>
-              <li><button onClick={() => go('/services')}>App Design</button></li>
+          <nav className="footer__col" aria-label="Services">
+            <h2 className="footer__col-title">Services</h2>
+            <ul className="footer__links">
+              {SERVICES.map((service) => (
+                <li key={service}>
+                  <button onClick={() => go('/services')}>{service}</button>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Contact */}
-          <div className="footer-col">
-            <div className="footer-col-title">Contact</div>
-            <ul className="footer-links">
-              <li><a href="mailto:support.oryntal@agency.org.in">support.oryntal@agency.org.in</a></li>
-              <li><a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
-              <li><a href={SOCIAL_LINKS.twitter} target="_blank" rel="noreferrer">X (Twitter)</a></li>
-              <li><a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer">Instagram</a></li>
-               <li><a href="https://docs.google.com/document/d/1EkEThAc5OUmN0eS3WBM1HFJiZJfidXcxklNNdysTdAQ/edit?usp=sharing"
-        target="_blank" target="_blank" rel="noreferrer">Refund Policy</a></li>
+          <nav className="footer__col" aria-label="Contact">
+            <h2 className="footer__col-title">Contact</h2>
+            <ul className="footer__links">
+              <li>
+                <a href="mailto:support.oryntal@agency.org.in">support.oryntal@agency.org.in</a>
+              </li>
+              <li>
+                <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href={SOCIAL_LINKS.twitter} target="_blank" rel="noopener noreferrer">
+                  X (Twitter)
+                </a>
+              </li>
+              <li>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://docs.google.com/document/d/1EkEThAc5OUmN0eS3WBM1HFJiZJfidXcxklNNdysTdAQ/edit?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Refund Policy
+                </a>
+              </li>
             </ul>
-          </div>
+          </nav>
         </div>
 
-        <div className="footer-bottom">
-          <span className="footer-copy">
-            &copy; 2025 Oryntal. All rights reserved. Crafted with Intelligence.
+        <div className="footer__bottom">
+          <span className="footer__copy">
+            &copy; {new Date().getFullYear()} Oryntal. All rights reserved. Crafted with Intelligence.
           </span>
-          <div className="social-icons">
-            <a className="social-icon" href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer" title="LinkedIn"><Icon name="linkedin" size={16} /></a>
-            <a className="social-icon" href={SOCIAL_LINKS.twitter} target="_blank" rel="noreferrer" title="X"><Icon name="x" size={16} /></a>
-            <a className="social-icon" href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer" title="Instagram"><Icon name="instagram" size={16} /></a>
+          <div className="footer__social">
+            <a className="footer__social-link" href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <Icon name="linkedin" size={18} />
+            </a>
+            <a className="footer__social-link" href={SOCIAL_LINKS.twitter} target="_blank" rel="noopener noreferrer" aria-label="X">
+              <Icon name="x" size={18} />
+            </a>
+            <a className="footer__social-link" href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Icon name="instagram" size={18} />
+            </a>
           </div>
         </div>
       </div>

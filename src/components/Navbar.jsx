@@ -3,13 +3,22 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/oryntal-logo.png'
 import './Navbar.css'
 
+const NAV_ITEMS = [
+  { label: 'Home', to: '/' },
+  { label: 'About', to: '/about' },
+  { label: 'Services', to: '/services' },
+]
+
+const PORTFOLIO_URL = 'https://oryntal-portfolio-showcase.vercel.app/'
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 60)
+    const handler = () => setScrolled(window.scrollY > 20)
+    handler()
     window.addEventListener('scroll', handler)
     return () => window.removeEventListener('scroll', handler)
   }, [])
@@ -21,42 +30,60 @@ export default function Navbar() {
   }
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <button className="nav-brand" onClick={() => handleNav('/')}>
-        <img src={logo} alt="Oryntal Logo" className="nav-logo logo-3d" />
-        <span className="nav-brand-text">ORY<span className="nav-brand-n">N</span>TAL</span>
-      </button>
+    <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
+      <nav className="navbar__inner container" aria-label="Primary">
+        <button className="navbar__brand" onClick={() => handleNav('/')} aria-label="Oryntal home">
+          <img src={logo} alt="Oryntal Logo" className="navbar__logo" width="32" height="32" />
+          <span className="navbar__brand-text">
+            ORY<span className="navbar__brand-n">N</span>TAL
+          </span>
+        </button>
 
-      {/* Desktop links */}
-      <ul className="nav-links">
-        <li><NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
-        <li><NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink></li>
-        <li><NavLink to="/services" className={({ isActive }) => isActive ? 'active' : ''}>Services</NavLink></li>
-        <li><a href="https://oryntal-portfolio-showcase.vercel.app/" target="_blank" rel="noopener noreferrer">Portfolio</a></li>
-        <li>
-          <NavLink to="/contact" className={({ isActive }) => `nav-cta ${isActive ? 'active' : ''}`}>
-            Contact Us
-          </NavLink>
-        </li>
-      </ul>
+        <ul className="navbar__links">
+          {NAV_ITEMS.map((item) => (
+            <li key={item.to}>
+              <NavLink to={item.to} end={item.to === '/'} className={({ isActive }) => (isActive ? 'active' : '')}>
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
+          <li>
+            <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer">
+              Portfolio
+            </a>
+          </li>
+          <li>
+            <NavLink to="/contact" className="btn btn-primary navbar__cta">
+              Contact Us
+            </NavLink>
+          </li>
+        </ul>
 
-      {/* Mobile burger */}
-      <button
-        className={`burger ${menuOpen ? 'open' : ''}`}
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle menu"
-      >
-        <span /><span /><span />
-      </button>
+        <button
+          className={`navbar__burger${menuOpen ? ' is-open' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </nav>
 
-      {/* Mobile menu */}
-      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
-        <button onClick={() => handleNav('/')}>Home</button>
-        <button onClick={() => handleNav('/about')}>About</button>
-        <button onClick={() => handleNav('/services')}>Services</button>
-        <a href="https://oryntal-portfolio-showcase.vercel.app/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Portfolio</a>
-        <button onClick={() => handleNav('/contact')} className="mobile-cta">Contact Us</button>
+      <div className={`navbar__mobile${menuOpen ? ' is-open' : ''}`}>
+        {NAV_ITEMS.map((item) => (
+          <button key={item.to} onClick={() => handleNav(item.to)}>
+            {item.label}
+          </button>
+        ))}
+        <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+          Portfolio
+        </a>
+        <button onClick={() => handleNav('/contact')} className="btn btn-primary">
+          Contact Us
+        </button>
       </div>
-    </nav>
+    </header>
   )
 }

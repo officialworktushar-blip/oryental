@@ -238,7 +238,7 @@ const iconMap = {
   ),
 }
 
-export default function Icon({ name, className = '', size = 20, strokeWidth = 1.8, filled = false }) {
+export default function Icon({ name, className = '', size = 20, strokeWidth = 1.5, filled = false }) {
   const glyph = iconMap[name]
   if (!glyph) return null
 

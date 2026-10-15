@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
+import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/Footer'
 import Icon from '../components/Icon'
+import Hl from '../components/Hl'
+import { claims, isVerified } from '../data/claims'
 import logo from '../assets/oryntal-logo.png'
 import './About.css'
 
@@ -30,7 +33,7 @@ const FOUNDERS = [
     bullets: [
       "Visionary architect of Oryntal's AI-first philosophy",
       'Drives strategic partnerships and investor relations',
-      '10+ years of entrepreneurship across tech and business',
+      { text: claims.founderExperience.tushar.text, verified: claims.founderExperience.tushar.verified },
       'Oversees flagship projects from concept to delivery',
     ],
   },
@@ -70,6 +73,10 @@ const VALUES = [
 ]
 
 export default function About() {
+  usePageMeta(
+    'About — Oryntal',
+    'The story of Oryntal is the story of founders who saw an industry broken by mediocrity and decided to build something better.'
+  )
   const navigate = useNavigate()
   const pageRef = useRevealOnMount()
 
@@ -80,101 +87,112 @@ export default function About() {
 
   return (
     <div className="about page-enter" ref={pageRef}>
-      <section className="about-hero">
-        <div className="blob" style={{ width: 700, height: 700, background: 'rgba(201,168,76,0.07)', top: -200, right: -200 }} />
-        <div className="blob" style={{ width: 500, height: 500, background: 'rgba(13,18,48,0.9)', bottom: -150, left: -100 }} />
-
-        <div className="about-hero-content">
-          <div className="tag"><span className="tag-dot" /> Our Story</div>
-          <h1>Built to <span className="gold-text">Solve</span> Real Problems</h1>
-          <p>The story of Oryntal is the story of founders who saw an industry broken by mediocrity and decided to build something better.</p>
-          <div className="about-hero-pills">
-            <div className="about-hero-pill">AI-led strategy</div>
-            <div className="about-hero-pill">Design discipline</div>
-            <div className="about-hero-pill">Measurable outcomes</div>
+      <section className="section section--ivory about-hero">
+        <div className="container about-hero__grid">
+          <div className="section-head">
+            <div className="eyebrow">Our Story</div>
+            <h1>
+              Built to <Hl>Solve</Hl> Real Problems
+            </h1>
+            <p className="lead">
+              The story of Oryntal is the story of founders who saw an industry broken by mediocrity and decided to
+              build something better.
+            </p>
+            <ul className="about-hero__pills">
+              {['AI-led strategy', 'Design discipline', 'Measurable outcomes'].map((pill) => (
+                <li key={pill} className="about-hero__pill">
+                  {pill}
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-
-        <div className="about-hero-visual">
-          <div className="orbit-ring orbit-ring-1" />
-          <div className="orbit-ring orbit-ring-2" />
-          <div className="orbit-ring orbit-ring-3" />
-          <div className="about-hero-rays" />
-          <div className="orbit-chip chip-top"><Icon name="brain" size={18} /> Strategy</div>
-          <div className="orbit-chip chip-right"><Icon name="palette" size={18} /> Design</div>
-          <div className="orbit-chip chip-bottom"><Icon name="rocket" size={18} /> Delivery</div>
-          <div className="orbit-center">
-            <img src={logo} alt="Oryntal Logo" className="orbit-logo logo-3d" />
+          <div className="about-hero__figure">
+            <img src={logo} alt="Oryntal Logo" className="about-hero__logo" width="260" height="260" />
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="story-grid">
-            <div className="story-left reveal">
-              <div className="tag"><span className="tag-dot" /> Origin</div>
-              <h2 className="section-heading">Where We <span className="gold-text">Came From</span></h2>
-              <div className="gold-line" />
-              <p className="section-sub" style={{ marginBottom: 20 }}>
-                We saw agencies giving clients slow timelines, generic outputs, and zero AI integration. The market was flooded with studios that could design but not engineer, and engineers who could not communicate.
-              </p>
-              <p className="section-sub" style={{ marginBottom: 20 }}>
-                Oryntal was built as the bridge - a fusion of frontier AI engineering and world-class creative design, unified under one roof with a single obsession: outcomes.
-              </p>
-              <blockquote className="about-quote">
-                Technology should serve human ambition, not replace it.
-              </blockquote>
+      <section className="section section--white">
+        <div className="container story">
+          <div className="story__col">
+            <div className="eyebrow">Origin</div>
+            <h2>
+              Where We <Hl>Came From</Hl>
+            </h2>
+            <p className="lead">
+              We saw agencies giving clients slow timelines, generic outputs, and zero AI integration. The market was
+              flooded with studios that could design but not engineer, and engineers who could not communicate.
+            </p>
+            <p className="lead">
+              Oryntal was built as the bridge - a fusion of frontier AI engineering and world-class creative design,
+              unified under one roof with a single obsession: outcomes.
+            </p>
+            <blockquote className="story__quote">Technology should serve human ambition, not replace it.</blockquote>
 
-              <div className="timeline">
-                {TIMELINE.map((item, i) => (
-                  <div className="timeline-item reveal" key={item.year}>
-                    <div className="timeline-dot" />
-                    {i < TIMELINE.length - 1 && <div className="timeline-line" />}
-                    <div className="timeline-content">
-                      <div className="timeline-year">{item.year}</div>
-                      <div className="timeline-title">{item.title}</div>
-                      <p className="timeline-text">{item.text}</p>
-                    </div>
+            <ol className="timeline">
+              {TIMELINE.map((item) => (
+                <li className="timeline__item" key={item.year}>
+                  <span className="timeline__year">{item.year}</span>
+                  <div>
+                    <h3 className="timeline__title">{item.title}</h3>
+                    <p className="timeline__text">{item.text}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="pain-right">
-              <div className="tag reveal" style={{ marginBottom: 24 }}><span className="tag-dot" /> Problems We Exist to Fix</div>
-              <div className="pain-grid">
-                {PAIN_POINTS.map((point) => (
-                  <div className="glass pain-card reveal" key={point.title}>
-                    <div className="pain-icon"><Icon name={point.icon} size={20} /></div>
-                    <div>
-                      <div className="pain-title">{point.title}</div>
-                      <p className="pain-text">{point.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section section--ivory">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> Leadership</div>
-            <h2 className="section-heading">Meet the <span className="gold-text">Founders</span></h2>
+          <div className="section-head">
+            <div className="eyebrow">Problems We Exist to Fix</div>
           </div>
-          <div className="founders-grid">
+          <div className="grid grid--3">
+            {PAIN_POINTS.map((point) => (
+              <article className="card reveal" key={point.title}>
+                <span className="icon-badge">
+                  <Icon name={point.icon} size={20} />
+                </span>
+                <h3 className="card-title">{point.title}</h3>
+                <p className="card-text">{point.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--white">
+        <div className="container">
+          <div className="section-head section-head--center">
+            <div className="eyebrow">Leadership</div>
+            <h2>
+              Meet the <Hl>Founders</Hl>
+            </h2>
+          </div>
+          <div className="grid grid--3">
             {FOUNDERS.map((founder) => (
-              <a className="glass founder-card reveal founder-card-link" href={founder.linkedin} target="_blank" rel="noreferrer" key={founder.name}>
-                <div className="founder-avatar">{founder.initials}</div>
-                <div className="founder-name">{founder.name}</div>
-                <div className="founder-role">{founder.role}</div>
-                <ul className="founder-bullets">
-                  {founder.bullets.map((bullet) => (
-                    <li key={bullet}><span className="bullet-dot" /> {bullet}</li>
-                  ))}
+              <a
+                className="card founder reveal"
+                href={founder.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                key={founder.name}
+              >
+                <div className="founder__avatar" aria-hidden="true">
+                  {founder.initials}
+                </div>
+                <h3 className="founder__name">{founder.name}</h3>
+                <div className="founder__role">{founder.role}</div>
+                <ul className="founder__bullets">
+                  {founder.bullets
+                    .filter((b) => (typeof b === 'string' ? true : isVerified(b)))
+                    .map((b) => (
+                      <li key={typeof b === 'string' ? b : b.text}>
+                        {typeof b === 'string' ? b : b.text}
+                      </li>
+                    ))}
                 </ul>
               </a>
             ))}
@@ -182,34 +200,39 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section section--ink">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div className="tag" style={{ margin: '0 auto 16px' }}><span className="tag-dot" /> What We Stand For</div>
-            <h2 className="section-heading">Our Core <span className="gold-text">Values</span></h2>
+          <div className="section-head section-head--center">
+            <div className="eyebrow">What We Stand For</div>
+            <h2>
+              Our Core <Hl>Values</Hl>
+            </h2>
           </div>
-          <div className="values-grid">
+          <div className="grid grid--3">
             {VALUES.map((value) => (
-              <div className="neu value-card reveal" key={value.title}>
-                <div className="value-icon"><Icon name={value.icon} size={28} /></div>
-                <div className="value-title">{value.title}</div>
-                <p className="value-text">{value.text}</p>
-              </div>
+              <article className="card reveal" key={value.title}>
+                <span className="icon-badge">
+                  <Icon name={value.icon} size={24} />
+                </span>
+                <h3 className="card-title">{value.title}</h3>
+                <p className="card-text">{value.text}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <div className="cta-banner" style={{ margin: '0 80px 80px' }}>
-        <div className="blob" style={{ width: 500, height: 300, background: 'rgba(201,168,76,0.08)', top: -80, left: '50%', transform: 'translateX(-50%)', zIndex: 0 }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div className="tag" style={{ margin: '0 auto 20px' }}><span className="tag-dot" /> Ready?</div>
-          <h2 className="cta-banner-title">Let&apos;s Build Something <span className="gold-text">Extraordinary</span></h2>
-          <button className="btn-gold" onClick={() => go('/contact')}>
+      <section className="section section--ivory">
+        <div className="container cta">
+          <div className="eyebrow">Ready?</div>
+          <h2 className="cta__title">
+            Let&apos;s Build Something <Hl>Extraordinary</Hl>
+          </h2>
+          <button className="btn btn-primary" onClick={() => go('/contact')}>
             Start Your Project <Icon name="arrowRight" size={16} />
           </button>
         </div>
-      </div>
+      </section>
 
       <Footer />
     </div>
