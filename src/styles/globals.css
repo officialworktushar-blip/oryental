@@ -230,6 +230,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
+  min-height: 44px;
   padding: 12px var(--sp-6);
   border-radius: var(--radius-btn);
   border: 1px solid transparent;

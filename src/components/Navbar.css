@@ -48,6 +48,9 @@
 }
 
 .navbar__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 0.95rem;
   font-weight: 500;
   text-decoration: none;
@@ -75,8 +78,8 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: none;
   border: 0;
   cursor: pointer;

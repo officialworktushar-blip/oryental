@@ -90,6 +90,9 @@
 }
 
 .info-card__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--gold-deep);
   text-decoration: none;
 }

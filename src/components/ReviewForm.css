@@ -12,12 +12,16 @@
 }
 
 .review-form__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   background: none;
   border: 0;
   font-size: 1rem;
   color: var(--text-muted);
   cursor: pointer;
-  line-height: 1;
 }
 
 .review-form__close:hover {
@@ -92,6 +96,11 @@
 }
 
 .review-form__star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   background: none;
   border: 0;
   font-size: 1.5rem;

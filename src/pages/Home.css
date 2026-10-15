@@ -113,6 +113,7 @@
 .review-card__author {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: var(--sp-2);
   font-weight: 600;
   font-size: 0.9rem;

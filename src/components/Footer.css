@@ -60,6 +60,9 @@
 
 .footer__links button,
 .footer__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   background: none;
   border: 0;
   padding: 0;
@@ -99,8 +102,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--graphite);
   border-radius: var(--radius-btn);
   color: var(--ivory);

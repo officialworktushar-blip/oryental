@@ -21,7 +21,7 @@ function Stars({ count }) {
 }
 
 function getProfileUrl(item) {
-  return item.linkedin || item.profile_url || '#'
+  return item.linkedin || item.profile_url || null
 }
 
 function getPlatform(item) {
@@ -155,7 +155,7 @@ export default function Reviews() {
                     </time>
                   </div>
                   <p className="review-card-full__text">&ldquo;{item.review}&rdquo;</p>
-                  <a className="review-card__author" href={getProfileUrl(item)} target="_blank" rel="noreferrer">
+                  <a className="review-card__author" href={getProfileUrl(item) || undefined} target="_blank" rel="noreferrer">
                     <Icon name={getPlatform(item)} size={18} />
                     <span>{item.name}</span>
                   </a>

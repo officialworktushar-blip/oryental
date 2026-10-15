@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
 import usePageMeta from '../hooks/usePageMeta'
@@ -76,7 +76,7 @@ function Stars({ count }) {
 }
 
 function getProfileUrl(item) {
-  return item.linkedin || item.profile_url || '#'
+  return item.linkedin || item.profile_url || null
 }
 
 function getPlatform(item) {
@@ -91,6 +91,7 @@ export default function Home() {
   const pageRef = useRevealOnMount()
   const [reviews, setReviews] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const dialogRef = useRef(null)
 
   const go = (path) => {
     navigate(path)
@@ -128,9 +129,40 @@ export default function Home() {
 
   useEffect(() => {
     if (!showModal) return
+    const previouslyFocused = document.activeElement
     document.body.style.overflow = 'hidden'
+    const dialog = dialogRef.current
+    const getFocusable = () =>
+      dialog
+        ? dialog.querySelectorAll(
+            'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        : []
+    const firstFocusable = getFocusable()[0]
+    if (firstFocusable) firstFocusable.focus()
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setShowModal(false)
+        return
+      }
+      if (event.key !== 'Tab') return
+      const nodes = getFocusable()
+      if (nodes.length === 0) return
+      const firstNode = nodes[0]
+      const lastNode = nodes[nodes.length - 1]
+      if (event.shiftKey && document.activeElement === firstNode) {
+        event.preventDefault()
+        lastNode.focus()
+      } else if (!event.shiftKey && document.activeElement === lastNode) {
+        event.preventDefault()
+        firstNode.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
     return () => {
+      document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
+      if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus()
     }
   }, [showModal])
 
@@ -331,7 +363,7 @@ export default function Home() {
                 <article className="card review-card reveal" key={item.id}>
                   <Stars count={item.rating} />
                   <p className="review-card__text">&ldquo;{item.review}&rdquo;</p>
-                  <a className="review-card__author" href={getProfileUrl(item)} target="_blank" rel="noopener noreferrer">
+                  <a className="review-card__author" href={getProfileUrl(item) || undefined} target="_blank" rel="noopener noreferrer">
                     <Icon name={getPlatform(item)} size={16} />
                     <span>{item.name}</span>
                   </a>
@@ -348,7 +380,14 @@ export default function Home() {
 
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            ref={dialogRef}
+            className="modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Write a Review"
+            onClick={(e) => e.stopPropagation()}
+          >
             <ReviewForm onSubmitted={refreshReviews} onClose={() => setShowModal(false)} />
           </div>
         </div>

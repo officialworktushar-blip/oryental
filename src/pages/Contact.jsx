@@ -131,7 +131,7 @@ export default function Contact() {
 
       const responseData = await res.json()
 
-      if (!res.ok || !responseData.success) {
+      if (!res.ok || !responseData.ok) {
         throw new Error(responseData.error || 'Something went wrong.')
       }
 
