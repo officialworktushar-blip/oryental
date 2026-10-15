@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRevealOnMount } from '../hooks/useScrollReveal'
 import usePageMeta from '../hooks/usePageMeta'
@@ -112,19 +111,38 @@ const TECH_CHIPS = [
   'Vector DBs',
 ]
 
+const VISUAL_CARDS = [
+  { icon: 'brain', label: 'AI systems' },
+  { icon: 'shield', label: 'Secure delivery' },
+  { icon: 'chart', label: 'Growth outcomes' },
+]
+
+const DESC_HIGHLIGHTS = { '01': 'proprietary data', '05': 'built for conversion' }
+const STEP_HIGHLIGHTS = { '03': 'full transparency' }
+
+function highlightPhrase(text, phrase) {
+  const idx = text.indexOf(phrase)
+  if (idx === -1) return text
+  return (
+    <>
+      {text.slice(0, idx)}
+      <Hl>{phrase}</Hl>
+      {text.slice(idx + phrase.length)}
+    </>
+  )
+}
+
 export default function Services() {
   usePageMeta(
     'Services — Oryntal',
     'Six specialized service lines, each built to transform how your business competes in an AI-first world.'
   )
-  const [activeIdx, setActiveIdx] = useState(0)
   const navigate = useNavigate()
   const pageRef = useRevealOnMount()
   const go = (path) => {
     navigate(path)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-  const svc = SERVICES[activeIdx]
 
   const whyItems = [
     isVerified(claims.speed.servicesDelivery) && {
@@ -143,8 +161,9 @@ export default function Services() {
 
   return (
     <div className="services page-enter" ref={pageRef}>
+      {/* Hero */}
       <section className="section section--ivory svc-hero">
-        <div className="container">
+        <div className="container svc-hero__grid">
           <div className="section-head">
             <div className="eyebrow">What We Do</div>
             <h1>
@@ -153,58 +172,67 @@ export default function Services() {
             <p className="lead">
               Six specialized service lines, each built to transform how your business competes in an AI-first world.
             </p>
-          </div>
-          <ul className="svc-hero__pills">
-            {['AI strategy', 'Product design', 'Production launch'].map((pill) => (
-              <li key={pill} className="svc-hero__pill">
-                <Icon name={pill === 'AI strategy' ? 'brain' : pill === 'Product design' ? 'palette' : 'rocket'} size={16} />
-                {pill}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="section section--white">
-        <div className="container svc-explorer">
-          <div className="svc-explorer__list">
-            {SERVICES.map((service, i) => (
-              <button
-                key={service.num}
-                aria-pressed={activeIdx === i}
-                className={`svc-explorer__item${activeIdx === i ? ' is-active' : ''}`}
-                onClick={() => setActiveIdx(i)}
-              >
-                <span className="svc-explorer__num">{service.num}</span>
-                <span className="svc-explorer__title">{service.title}</span>
-                <Icon name="chevronRight" size={18} />
-              </button>
-            ))}
-          </div>
-
-          <article className="card svc-detail reveal">
-            <div className="eyebrow">
-              {svc.tag} - {svc.num}
-            </div>
-            <h2 className="svc-detail__title">{svc.title}</h2>
-            <p className="svc-detail__desc">{svc.desc}</p>
-            <ul className="svc-detail__features">
-              {svc.features.map((feature) => (
-                <li key={feature.text}>
-                  <span className="svc-detail__icon">
-                    <Icon name={feature.icon} size={18} />
-                  </span>
-                  {feature.text}
+            <ul className="svc-hero__pills">
+              {['AI strategy', 'Product design', 'Production launch'].map((pill) => (
+                <li key={pill} className="svc-hero__pill">
+                  <Icon name={pill === 'AI strategy' ? 'brain' : pill === 'Product design' ? 'palette' : 'rocket'} size={16} />
+                  {pill}
                 </li>
               ))}
             </ul>
-            <button className="btn btn-primary" onClick={() => go('/contact')}>
-              Start This Project <Icon name="arrowRight" size={16} />
-            </button>
-          </article>
+          </div>
+          <aside className="svc-hero__panel" aria-label="Full-stack intelligence">
+            <div className="svc-hero__panel-copy">Full-stack intelligence</div>
+            <ul className="svc-hero__panel-list">
+              {VISUAL_CARDS.map((card) => (
+                <li className="svc-panel__card" key={card.label}>
+                  <span className="icon-badge">
+                    <Icon name={card.icon} size={20} />
+                  </span>
+                  {card.label}
+                </li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </section>
 
+      {/* Service lines — alternating rows */}
+      <section className="section section--white">
+        <div className="container svc-rows">
+          {SERVICES.map((service) => (
+            <article className="svc-row reveal" key={service.num}>
+              <div className="svc-row__aside">
+                <span className="svc-row__num">{service.num}</span>
+                <span className="eyebrow">{service.tag}</span>
+                <h2 className="svc-row__title">{service.title}</h2>
+              </div>
+              <div className="svc-row__body">
+                <p className="svc-row__desc">
+                  {DESC_HIGHLIGHTS[service.num]
+                    ? highlightPhrase(service.desc, DESC_HIGHLIGHTS[service.num])
+                    : service.desc}
+                </p>
+                <ul className="svc-row__features">
+                  {service.features.map((feature) => (
+                    <li key={feature.text}>
+                      <span className="svc-row__icon">
+                        <Icon name={feature.icon} size={16} />
+                      </span>
+                      {feature.text}
+                    </li>
+                  ))}
+                </ul>
+                <button className="btn btn-secondary" onClick={() => go('/contact')}>
+                  Start This Project <Icon name="arrowRight" size={16} />
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Process */}
       <section className="section section--ink">
         <div className="container">
           <div className="section-head section-head--center">
@@ -218,13 +246,16 @@ export default function Services() {
               <li className="process__step reveal" key={step.num}>
                 <span className="process__num">{step.num}</span>
                 <h3 className="process__title">{step.title}</h3>
-                <p className="process__text">{step.text}</p>
+                <p className="process__text">
+                  {STEP_HIGHLIGHTS[step.num] ? highlightPhrase(step.text, STEP_HIGHLIGHTS[step.num]) : step.text}
+                </p>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
+      {/* Advantage */}
       <section className="section section--ivory">
         <div className="container">
           <div className="section-head section-head--center">
@@ -247,6 +278,7 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Stack */}
       <section className="section section--white">
         <div className="container">
           <div className="section-head section-head--center">
@@ -255,7 +287,7 @@ export default function Services() {
               Technologies We <Hl>Master</Hl>
             </h2>
           </div>
-          <ul className="chips">
+          <ul className="chip-set">
             {TECH_CHIPS.map((chip) => (
               <li className="chip reveal" key={chip}>
                 {chip}
@@ -265,6 +297,7 @@ export default function Services() {
         </div>
       </section>
 
+      {/* CTA */}
       <section className="section section--ink">
         <div className="container cta">
           <div className="eyebrow">Get Started</div>
