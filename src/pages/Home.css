@@ -13,11 +13,8 @@
   margin-block: var(--sp-6);
 }
 
-.hero__note {
-  margin-top: var(--sp-6);
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
+.hero__pills {
+  margin-top: var(--sp-8);
 }
 
 .hero__figure {
@@ -25,43 +22,48 @@
   justify-content: center;
 }
 
-.hero__logo {
-  width: clamp(200px, 24vw, 320px);
+/* Hero illustration — flat, palette colours only */
+.hero-ill {
+  width: clamp(240px, 30vw, 420px);
   height: auto;
-  border: 1px solid var(--sand);
-  border-radius: var(--radius);
-  padding: var(--sp-8);
-  background: var(--surface-light);
 }
 
-.eyebrow--plain {
-  gap: var(--sp-3);
+.hero-ill__ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
 }
 
-.eyebrow--plain::before {
-  display: none;
+.hero-ill__globe ellipse,
+.hero-ill__globe line {
+  fill: none;
+  stroke: var(--sand);
+  stroke-width: 1.5;
 }
 
-.eyebrow--plain span {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
+.hero-ill__net line {
+  stroke: var(--graphite);
+  stroke-width: 1.5;
+  opacity: 0.5;
 }
 
-.eyebrow--plain span:not(:last-child)::after {
-  content: '·';
-  color: var(--sand);
+.hero-ill__nodes circle {
+  fill: var(--ink);
 }
 
-/* Stats */
+.hero-ill__core {
+  fill: var(--gold);
+}
+
+/* Stats strip */
 .stat {
   text-align: center;
 }
 
 .stat__number {
   font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
   font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 600;
   line-height: 1.1;
   color: var(--gold);
 }
@@ -71,6 +73,35 @@
   font-size: 0.9rem;
   letter-spacing: 0.04em;
   color: var(--sand);
+}
+
+/* What-we-build strip */
+.strip {
+  padding-block: var(--sp-12);
+}
+
+.chip-set--center {
+  justify-content: center;
+}
+
+/* Services preview */
+.svc-preview__num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--gold-deep);
+  margin-bottom: var(--sp-3);
+}
+
+/* Why us */
+.why__intro {
+  display: grid;
+  gap: var(--sp-4);
+  max-width: 720px;
+  margin-bottom: var(--sp-12);
+}
+
+.why__cards {
+  margin-bottom: var(--sp-12);
 }
 
 /* Review cards */
@@ -87,23 +118,6 @@
   font-size: 0.9rem;
   text-decoration: none;
   color: var(--gold-deep);
-}
-
-/* Why */
-.why__copy {
-  margin-top: var(--sp-12);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sp-4);
-}
-
-/* Services preview */
-.svc-preview__num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
-  color: var(--gold);
-  margin-bottom: var(--sp-3);
 }
 
 /* CTA */

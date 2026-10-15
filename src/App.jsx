@@ -7,12 +7,14 @@ import Services from './pages/Services'
 import Contact from './pages/Contact'
 import Reviews from './pages/Reviews'
 import NotFound from './pages/NotFound'
+import Intro from './components/Intro'
 
 const Styleguide = import.meta.env.DEV ? lazy(() => import('./pages/Styleguide')) : null
 
 function App() {
   return (
     <BrowserRouter>
+      <Intro />
       <Navbar />
       <main>
         <Routes>

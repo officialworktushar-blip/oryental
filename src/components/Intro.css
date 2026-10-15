@@ -1,0 +1,136 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--ivory);
+  overflow: hidden;
+  will-change: transform;
+}
+
+.intro.is-leaving {
+  animation: introUp 600ms var(--ease) forwards;
+}
+
+@keyframes introUp {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.intro__skip {
+  position: absolute;
+  top: var(--sp-6);
+  right: var(--sp-6);
+  z-index: 1;
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--graphite);
+  border-radius: var(--radius-btn);
+  background: none;
+  color: var(--sand);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.intro__skip:hover {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+.intro__skip:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.intro__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.intro__mark {
+  width: 120px;
+  height: 120px;
+}
+
+/* Gold circle draws (stroke-dashoffset) */
+.intro__circle {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 289;
+  stroke-dashoffset: 289;
+  transform: rotate(-90deg);
+  transform-origin: 60px 60px;
+  animation: introDraw 1200ms var(--ease) forwards;
+}
+
+@keyframes introDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Globe band wipes in */
+.intro__globe ellipse,
+.intro__globe line {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: 60px 60px;
+  animation: introBand 500ms var(--ease) 1200ms forwards;
+}
+
+@keyframes introBand {
+  to {
+    opacity: 0.7;
+    transform: scaleX(1);
+  }
+}
+
+.intro__word {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  color: var(--ivory);
+  padding-left: 0.4em;
+  opacity: 0;
+  letter-spacing: 0.4em;
+  animation: introWord 800ms var(--ease) 1600ms forwards;
+}
+
+@keyframes introWord {
+  to {
+    opacity: 1;
+    letter-spacing: 0.14em;
+  }
+}
+
+.intro__line {
+  height: 1px;
+  width: 0;
+  background: var(--gold);
+  animation: introLine 600ms var(--ease) 2200ms forwards;
+}
+
+@keyframes introLine {
+  to {
+    width: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}

@@ -8,8 +8,16 @@ import Hl from '../components/Hl'
 import ReviewForm from '../components/ReviewForm'
 import { supabase } from '../lib/supabase'
 import { claims, isVerified } from '../data/claims'
-import logo from '../assets/oryntal-logo.png'
 import './Home.css'
+
+const MARQUEE_ITEMS = [
+  'AI LLM Models',
+  'NLP Pipelines',
+  'Web Design',
+  'Neural Architectures',
+  'Chatbot and AI Agents',
+  'App Design',
+]
 
 const SERVICES_PREVIEW = [
   {
@@ -29,6 +37,29 @@ const SERVICES_PREVIEW = [
     icon: 'palette',
     title: 'Website & App Design',
     text: 'Award-worthy UI/UX for web and mobile across Android and iOS, conversion-focused and beautifully crafted.',
+  },
+]
+
+const WHY_CARDS = [
+  {
+    icon: 'brain',
+    title: 'AI-First Thinking',
+    text: 'Every project starts with the question: how can intelligence amplify this? We embed AI at the core, not as an afterthought.',
+  },
+  {
+    icon: 'zap',
+    title: 'Speed Without Sacrifice',
+    text: 'AI-enhanced workflows cut timelines by up to 60%. We move fast without compromising the precision your project demands.',
+  },
+  {
+    icon: 'target',
+    title: 'Outcome-Obsessed',
+    text: "Built for conversion, retention, and measurable growth. If it doesn't move the needle, we don't build it.",
+  },
+  {
+    icon: 'globe',
+    title: 'Global Reach, Human Touch',
+    text: 'Internationally-minded team with deeply personal client relationships. We speak the language of global business.',
   },
 ]
 
@@ -103,8 +134,16 @@ export default function Home() {
     }
   }, [showModal])
 
+  const speedVerified = isVerified(claims.speed.homeTimelines)
+  const whyCards = WHY_CARDS.map((card) =>
+    card.title === 'Speed Without Sacrifice' && !speedVerified
+      ? { ...card, text: 'We move fast without compromising the precision your project demands.' }
+      : card
+  )
+
   return (
     <div className="home page-enter" ref={pageRef}>
+      {/* 1. Hero */}
       <section className="section section--ivory hero">
         <div className="container hero__grid">
           <div className="hero__content">
@@ -135,21 +174,44 @@ export default function Home() {
                 Check Portfolio <Icon name="arrowRight" size={16} />
               </a>
             </div>
-            <p className="hero__note">AI Systems · Brand Design · Growth Outcomes</p>
+            <div className="chip-set hero__pills">
+              <span className="chip">AI Systems</span>
+              <span className="chip">Brand Design</span>
+              <span className="chip">Growth Outcomes</span>
+            </div>
           </div>
 
           <div className="hero__figure">
-            <img
-              src={logo}
-              alt="Oryntal Logo"
-              className="hero__logo"
-              width="320"
-              height="320"
-            />
+            <svg
+              className="hero-ill"
+              viewBox="0 0 420 380"
+              role="img"
+              aria-label="Abstract network of connected intelligence nodes"
+            >
+              <circle className="hero-ill__ring" cx="210" cy="190" r="150" />
+              <g className="hero-ill__globe">
+                <ellipse cx="210" cy="190" rx="150" ry="56" />
+                <ellipse cx="210" cy="190" rx="62" ry="150" />
+                <line x1="60" y1="190" x2="360" y2="190" />
+              </g>
+              <g className="hero-ill__net">
+                <line x1="120" y1="120" x2="210" y2="190" />
+                <line x1="210" y1="190" x2="320" y2="260" />
+                <line x1="120" y1="120" x2="300" y2="110" />
+                <line x1="300" y1="110" x2="320" y2="260" />
+              </g>
+              <g className="hero-ill__nodes">
+                <circle cx="120" cy="120" r="8" />
+                <circle cx="300" cy="110" r="8" />
+                <circle cx="320" cy="260" r="8" />
+                <circle className="hero-ill__core" cx="210" cy="190" r="12" />
+              </g>
+            </svg>
           </div>
         </div>
       </section>
 
+      {/* 2. Stats strip */}
       {claims.stats.filter(isVerified).length > 0 && (
         <section className="section section--ink stats">
           <div className="container">
@@ -165,116 +227,21 @@ export default function Home() {
         </section>
       )}
 
-      <section className="section section--white">
+      {/* 3. What we build — static chips row */}
+      <section className="section section--white strip" aria-label="What we build">
         <div className="container">
-          <div className="section-head section-head--center">
-            <div className="eyebrow">Client Reviews</div>
-            <h2>
-              What Our <Hl>Clients</Hl> Say
-            </h2>
-            <div className="btn-row" style={{ justifyContent: 'center', marginTop: 'var(--sp-6)' }}>
-              <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-                Write a Review <Icon name="arrowRight" size={16} />
-              </button>
-            </div>
+          <div className="chip-set chip-set--center">
+            {MARQUEE_ITEMS.map((item) => (
+              <span className="chip" key={item}>
+                {item}
+              </span>
+            ))}
           </div>
-
-          {reviews.length > 0 ? (
-            <div className="grid grid--3">
-              {reviews.map((item) => (
-                <article className="card review-card reveal" key={item.id}>
-                  <Stars count={item.rating} />
-                  <p className="review-card__text">&ldquo;{item.review}&rdquo;</p>
-                  <a className="review-card__author" href={getProfileUrl(item)} target="_blank" rel="noreferrer">
-                    <Icon name={getPlatform(item)} size={16} />
-                    <span>{item.name}</span>
-                  </a>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <p className="lead" style={{ textAlign: 'center', marginInline: 'auto' }}>
-              No reviews yet. Be the first to share your experience!
-            </p>
-          )}
         </div>
       </section>
 
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <ReviewForm onSubmitted={refreshReviews} onClose={() => setShowModal(false)} />
-          </div>
-        </div>
-      )}
-
+      {/* 4. Core Services */}
       <section className="section section--ivory">
-        <div className="container">
-          <div className="section-head">
-            <div className="eyebrow">Why Us</div>
-            <h2>
-              The Oryntal <Hl>Difference</Hl>
-            </h2>
-          </div>
-          <div className="grid grid--2">
-            <article className="card reveal">
-              <span className="icon-badge">
-                <Icon name="brain" size={22} />
-              </span>
-              <h3 className="card-title">AI-First Thinking</h3>
-              <p className="card-text">
-                Every project starts with the question: how can intelligence amplify this? We embed AI at the core, not
-                as an afterthought.
-              </p>
-            </article>
-            {isVerified(claims.speed.homeTimelines) && (
-              <article className="card reveal">
-                <span className="icon-badge">
-                  <Icon name="zap" size={22} />
-                </span>
-                <h3 className="card-title">Speed Without Sacrifice</h3>
-                <p className="card-text">{claims.speed.homeTimelines.text}</p>
-              </article>
-            )}
-            <article className="card reveal">
-              <span className="icon-badge">
-                <Icon name="target" size={22} />
-              </span>
-              <h3 className="card-title">Outcome-Obsessed</h3>
-              <p className="card-text">
-                Built for conversion, retention, and measurable growth. If it doesn&apos;t move the needle, we don&apos;t
-                build it.
-              </p>
-            </article>
-            <article className="card reveal">
-              <span className="icon-badge">
-                <Icon name="globe" size={22} />
-              </span>
-              <h3 className="card-title">Global Reach, Human Touch</h3>
-              <p className="card-text">
-                Internationally-minded team with deeply personal client relationships. We speak the language of global
-                business.
-              </p>
-            </article>
-          </div>
-
-          <div className="why__copy reveal">
-            <p className="lead">
-              We do not just build products - we engineer outcomes. Every engagement is driven by measurable results,
-              AI-first thinking, and a relentless pursuit of excellence.
-            </p>
-            <p className="lead">
-              Our founders come from the intersection of deep tech and business strategy, giving Oryntal a perspective
-              that most agencies simply cannot replicate.
-            </p>
-            <button className="btn btn-secondary" onClick={() => go('/about')}>
-              Our Story
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--ink">
         <div className="container">
           <div className="section-head section-head--center">
             <div className="eyebrow">What We Do</div>
@@ -305,7 +272,90 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 5. The Oryntal Difference */}
+      <section className="section section--white">
+        <div className="container">
+          <div className="section-head">
+            <div className="eyebrow">Why Us</div>
+            <h2>
+              The Oryntal <Hl>Difference</Hl>
+            </h2>
+          </div>
+          <div className="why__intro">
+            <p className="lead">
+              We do not just build products - we engineer outcomes. Every engagement is driven by measurable results,
+              AI-first thinking, and a relentless pursuit of excellence.
+            </p>
+            <p className="lead">
+              Our founders come from the intersection of deep tech and business strategy, giving Oryntal a perspective
+              that most agencies simply cannot replicate.
+            </p>
+          </div>
+          <div className="grid grid--2 why__cards">
+            {whyCards.map((card) => (
+              <article className="card reveal" key={card.title}>
+                <span className="icon-badge">
+                  <Icon name={card.icon} size={22} />
+                </span>
+                <h3 className="card-title">{card.title}</h3>
+                <p className="card-text">{card.text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="btn-row why__cta">
+            <button className="btn btn-secondary" onClick={() => go('/about')}>
+              Our Story
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Client Reviews */}
       <section className="section section--ivory">
+        <div className="container">
+          <div className="section-head section-head--center">
+            <div className="eyebrow">Client Reviews</div>
+            <h2>
+              What Our <Hl>Clients</Hl> Say
+            </h2>
+            <div className="btn-row" style={{ justifyContent: 'center', marginTop: 'var(--sp-6)' }}>
+              <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+                Write a Review <Icon name="arrowRight" size={16} />
+              </button>
+            </div>
+          </div>
+
+          {reviews.length > 0 ? (
+            <div className="grid grid--3">
+              {reviews.map((item) => (
+                <article className="card review-card reveal" key={item.id}>
+                  <Stars count={item.rating} />
+                  <p className="review-card__text">&ldquo;{item.review}&rdquo;</p>
+                  <a className="review-card__author" href={getProfileUrl(item)} target="_blank" rel="noopener noreferrer">
+                    <Icon name={getPlatform(item)} size={16} />
+                    <span>{item.name}</span>
+                  </a>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className="lead" style={{ textAlign: 'center', marginInline: 'auto' }}>
+              No reviews yet. Be the first to share your experience!
+            </p>
+          )}
+        </div>
+      </section>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <ReviewForm onSubmitted={refreshReviews} onClose={() => setShowModal(false)} />
+          </div>
+        </div>
+      )}
+
+      {/* 7. CTA banner */}
+      <section className="section section--ink">
         <div className="container cta">
           <div className="eyebrow">Ready to Transform?</div>
           <h2 className="cta__title">
